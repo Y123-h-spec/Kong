@@ -1,888 +1,964 @@
-[index.html](https://github.com/user-attachments/files/32224299/index.html)
+[index.html](https://github.com/user-attachments/files/32224748/index.html)
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>空谷设计 KONGGU DESIGN · 2026 企业简介</title>
-<meta name="description" content="空谷设计 — 酒店 · 康养 · 休闲空间设计，深耕十余年，累计落地 400+ 项目。">
-<style>
-/* ===== Reset & Variables ===== */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#080808;--bg-soft:#0e0e0e;--bg-card:#111;
-  --gold:#d4af37;--gold-light:#e8c96a;--gold-dark:#b8860b;
-  --gold-dim:rgba(212,175,55,.5);--gold-faint:rgba(212,175,55,.15);--gold-line:rgba(212,175,55,.25);
-  --white:#fff;--gray:#bebebe;--gray-dim:#888;--gray-faint:#555;
-  --serif:'Noto Serif SC','Source Han Serif SC','SimSun',serif;
-  --sans:'Noto Sans SC','Source Han Sans SC','Microsoft YaHei',sans-serif;
-  --en:'Playfair Display',Georgia,serif;
-  --mont:'Montserrat','Helvetica Neue',Arial,sans-serif;
-  --nav-h:56px;--maxw:1280px;--section-py:5rem;
-}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--white);font-family:var(--sans);line-height:1.7;overflow-x:hidden}
-img{max-width:100%;display:block}
-a{color:var(--gold);text-decoration:none}
-::selection{background:var(--gold);color:var(--bg)}
-
-/* ===== Scroll Progress Bar ===== */
-.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-dark),var(--gold-light));z-index:200;width:0;transition:width .1s linear}
-
-/* ===== Navigation ===== */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(8,8,8,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--gold-faint);
-  padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);
-  transition:background .3s;
-}
-.nav.scrolled{background:rgba(8,8,8,.97);box-shadow:0 2px 20px rgba(0,0,0,.5)}
-.nav-brand{font-family:var(--serif);font-size:1rem;color:var(--gold);letter-spacing:.15em;cursor:pointer}
-.nav-brand small{font-family:var(--mont);font-size:.6rem;color:var(--gray-dim);letter-spacing:.2em;margin-left:.5rem}
-.nav-links{display:flex;gap:1.1rem;list-style:none;align-items:center}
-.nav-links a{
-  font-family:var(--mont);font-size:.68rem;letter-spacing:.1em;color:var(--gray);
-  transition:color .3s;text-transform:uppercase;position:relative;padding:.3rem 0;
-}
-.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
-.nav-links a:hover,.nav-links a.active{color:var(--gold)}
-.nav-links a:hover::after,.nav-links a.active::after{width:100%}
-.nav-toggle{display:none;background:none;border:none;color:var(--gold);font-size:1.5rem;cursor:pointer;padding:.5rem}
-@media(max-width:1024px){
-  .nav-links{
-    position:fixed;top:var(--nav-h);right:-100%;width:260px;height:calc(100vh - var(--nav-h));
-    background:rgba(8,8,8,.98);flex-direction:column;gap:0;padding:1rem 0;
-    transition:right .35s ease;border-left:1px solid var(--gold-faint);
-  }
-  .nav-links.open{right:0}
-  .nav-links li{width:100%}
-  .nav-links a{display:block;padding:.9rem 1.5rem;font-size:.8rem}
-  .nav-links a::after{display:none}
-  .nav-toggle{display:block}
-}
-
-/* ===== Side Dot Nav ===== */
-.dot-nav{
-  position:fixed;right:1.2rem;top:50%;transform:translateY(-50%);z-index:90;
-  display:flex;flex-direction:column;gap:.7rem;
-}
-.dot-nav a{
-  width:8px;height:8px;border-radius:50%;background:var(--gray-faint);
-  transition:all .3s;position:relative;display:block;
-}
-.dot-nav a:hover,.dot-nav a.active{background:var(--gold);transform:scale(1.4)}
-.dot-nav a .tooltip{
-  position:absolute;right:18px;top:50%;transform:translateY(-50%);
-  background:rgba(8,8,8,.95);border:1px solid var(--gold-faint);color:var(--gold);
-  font-family:var(--mont);font-size:.65rem;letter-spacing:.1em;padding:.3rem .7rem;
-  white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s;border-radius:2px;
-}
-.dot-nav a:hover .tooltip{opacity:1}
-@media(max-width:1024px){.dot-nav{display:none}}
-
-/* ===== Back to Top ===== */
-.back-top{
-  position:fixed;bottom:2rem;right:2rem;z-index:90;width:44px;height:44px;
-  background:rgba(8,8,8,.8);border:1px solid var(--gold-dim);border-radius:50%;
-  color:var(--gold);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  opacity:0;visibility:hidden;transform:translateY(10px);transition:all .3s;
-}
-.back-top.show{opacity:1;visibility:visible;transform:translateY(0)}
-.back-top:hover{background:var(--gold);color:var(--bg)}
-
-/* ===== Section Common ===== */
-section{
-  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-  padding:calc(var(--nav-h) + 3rem) 3rem 4rem;position:relative;overflow:hidden;
-}
-.container{max-width:var(--maxw);width:100%;margin:0 auto}
-.section-tag{
-  font-family:var(--mont);font-size:.68rem;letter-spacing:.25em;color:var(--gold);
-  text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.8rem;
-}
-.section-tag::before{content:'';width:24px;height:1px;background:var(--gold)}
-.section-title{
-  font-family:var(--serif);font-size:2.6rem;font-weight:400;color:var(--white);
-  letter-spacing:.06em;margin-bottom:.8rem;line-height:1.2;
-}
-.section-line{width:60px;height:2px;background:var(--gold);margin:1rem 0 2rem}
-.ghost-char{
-  position:absolute;font-family:var(--serif);font-size:18rem;color:rgba(212,175,55,.05);
-  pointer-events:none;user-select:none;line-height:1;font-weight:400;
-}
-.page-meta{
-  position:absolute;bottom:1.5rem;left:0;right:0;display:flex;justify-content:space-between;
-  padding:0 3rem;font-family:var(--mont);font-size:.62rem;color:var(--gray-faint);letter-spacing:.15em;
-  pointer-events:none;
-}
-
-/* ===== Reveal Animation ===== */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:.1s}
-.reveal-delay-2{transition-delay:.2s}
-.reveal-delay-3{transition-delay:.3s}
-
-/* ===== P1 Cover ===== */
-#cover{
-  padding:0;justify-content:flex-start;
-  background:linear-gradient(90deg,rgba(8,8,8,.93) 0%,rgba(8,8,8,.6) 45%,rgba(8,8,8,.2) 100%),
-             url('assets/img/cover.jpg') center/cover no-repeat;
-}
-.cover-inner{padding:10rem 3rem 4rem;max-width:800px}
-.cover-brand{font-family:var(--serif);font-size:1.1rem;color:var(--gold);letter-spacing:.2em;margin-bottom:.3rem}
-.cover-brand-en{font-family:var(--mont);font-size:.68rem;color:var(--gold-dim);letter-spacing:.25em;margin-bottom:5rem}
-.cover-title{font-family:var(--serif);font-size:5rem;font-weight:400;color:var(--white);letter-spacing:.12em;line-height:1.1;margin-bottom:1rem}
-.cover-title-en{font-family:var(--en);font-size:1.1rem;color:var(--gold);letter-spacing:.3em;margin-bottom:1.5rem}
-.cover-sub{font-size:.95rem;color:var(--gray);letter-spacing:.08em;margin-bottom:5rem}
-.cover-meta{font-family:var(--mont);font-size:.72rem;color:var(--gold-dim);letter-spacing:.25em}
-.cover-corner{position:absolute;bottom:3rem;right:3rem;font-family:var(--mont);font-size:.68rem;color:var(--gray-faint);letter-spacing:.2em;text-align:right}
-.cover-scroll{
-  position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--gold-dim);
-  font-family:var(--mont);font-size:.6rem;letter-spacing:.2em;animation:bounce 2s infinite;
-}
-.cover-scroll::after{content:'';width:1px;height:30px;background:linear-gradient(var(--gold),transparent)}
-@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
-
-/* ===== P2 TOC ===== */
-#toc .ghost-char{right:8%;top:12%}
-.toc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1rem}
-.toc-card{
-  background:var(--bg-card);border:1px solid var(--gold-faint);padding:1.8rem 1.5rem;
-  transition:all .35s;cursor:pointer;position:relative;overflow:hidden;
-}
-.toc-card::before{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--gold);transition:width .35s}
-.toc-card:hover{border-color:var(--gold-dim);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.4)}
-.toc-card:hover::before{width:100%}
-.toc-card .num{font-family:var(--en);font-size:2rem;color:var(--gold);line-height:1;margin-bottom:.8rem}
-.toc-card h3{font-family:var(--serif);font-size:1.2rem;color:var(--white);font-weight:400;margin-bottom:.3rem}
-.toc-card .en{font-family:var(--mont);font-size:.65rem;color:var(--gold);letter-spacing:.12em;margin-bottom:.5rem}
-.toc-card .desc{font-size:.82rem;color:var(--gray-dim);line-height:1.5}
-@media(max-width:900px){.toc-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
-
-/* ===== P3 Prologue ===== */
-#prologue{
-  background:linear-gradient(rgba(8,8,8,.8),rgba(8,8,8,.8)),url('assets/img/bg-map.jpg') center/cover no-repeat;
-  text-align:center;align-items:center;
-}
-#prologue .ghost-char{left:50%;top:8%;transform:translateX(-50%)}
-.prologue-quote{font-family:var(--serif);font-size:2.8rem;color:var(--white);letter-spacing:.12em;margin:2rem 0 1.5rem;line-height:1.4}
-.prologue-sub{font-size:1rem;color:var(--gray);letter-spacing:.08em;max-width:650px}
-
-/* ===== P4 Profile ===== */
-.profile-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:4rem;align-items:start}
-.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2rem 0}
-.stat-card{
-  background:var(--bg-card);border:1px solid var(--gold-faint);padding:1.5rem 1rem;text-align:center;
-  transition:border-color .3s;
-}
-.stat-card:hover{border-color:var(--gold-dim)}
-.stat-num{font-family:var(--en);font-size:2.2rem;color:var(--gold);line-height:1;margin-bottom:.5rem}
-.stat-label{font-size:.8rem;color:var(--gray-dim)}
-.profile-body p{font-size:.92rem;color:var(--gray);margin-bottom:1.1rem;line-height:2}
-@media(max-width:900px){.profile-grid{grid-template-columns:1fr;gap:2rem}}
-
-/* ===== P5 Capability ===== */
-.cap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:1rem}
-.cap-card{
-  background:var(--bg-card);border:1px solid var(--gold-faint);padding:1.3rem .8rem;text-align:center;
-  transition:all .3s;
-}
-.cap-card:hover{border-color:var(--gold-dim);background:rgba(212,175,55,.05);transform:translateY(-3px)}
-.cap-card .num{font-family:var(--en);font-size:1.1rem;color:var(--gold-dim);margin-bottom:.5rem}
-.cap-card .name{font-family:var(--serif);font-size:1rem;color:var(--white)}
-@media(max-width:1024px){.cap-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.cap-grid{grid-template-columns:repeat(2,1fr)}}
-
-/* ===== P6 Qualification ===== */
-.cert-grid{display:flex;gap:3rem;justify-content:center;align-items:flex-start;margin-top:2rem;flex-wrap:wrap}
-.cert-card{text-align:center;transition:transform .3s}
-.cert-card:hover{transform:scale(1.02)}
-.cert-card img{border:1px solid var(--gold-faint);max-height:400px;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.4)}
-.cert-card p{font-size:.88rem;color:var(--gray);margin-top:1rem}
-
-/* ===== Section Divider ===== */
-.divider{background:linear-gradient(rgba(8,8,8,.82),rgba(8,8,8,.82)),url('assets/img/bg-map.jpg') center/cover no-repeat}
-.divider .ghost-char{right:8%;top:12%}
-.divider-title{font-family:var(--serif);font-size:3.5rem;color:var(--white);letter-spacing:.08em;margin-bottom:.8rem;line-height:1.2}
-.divider-en{font-family:var(--mont);font-size:.9rem;color:var(--gold);letter-spacing:.22em;margin-bottom:1.2rem}
-.divider-desc{font-size:.95rem;color:var(--gray);max-width:650px;line-height:1.8}
-
-/* ===== Case Common ===== */
-.case-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.5rem}
-.case-no{font-family:var(--en);font-size:1.8rem;color:var(--gold-dim);line-height:1}
-.case-title{font-family:var(--serif);font-size:1.6rem;color:var(--white);font-weight:400;letter-spacing:.04em}
-.case-en{font-family:var(--mont);font-size:.7rem;color:var(--gold);letter-spacing:.12em;margin-left:auto}
-.case-img{width:100%;border:1px solid var(--gold-faint);transition:transform .4s,box-shadow .4s;cursor:zoom-in}
-.case-img:hover{box-shadow:0 12px 40px rgba(0,0,0,.5)}
-.case-meta{display:grid;grid-template-columns:auto 1fr;gap:.5rem 1.5rem;font-size:.88rem;margin-top:1.2rem}
-.case-meta dt{color:var(--gray-dim);font-family:var(--mont);font-size:.75rem;letter-spacing:.08em}
-.case-meta dd{color:var(--white)}
-
-/* Layout A: left image + right info */
-.case-a{display:grid;grid-template-columns:1.5fr 1fr;gap:2.5rem;align-items:start}
-.case-a .case-sub{margin-top:1.5rem;width:100%;border:1px solid var(--gold-faint);cursor:zoom-in}
-@media(max-width:900px){.case-a{grid-template-columns:1fr}}
-
-/* Layout B: full image + bottom bar + floating sub */
-.case-b-wrap{position:relative}
-.case-b-bar{
-  background:rgba(8,8,8,.92);border-top:2px solid var(--gold);
-  padding:1.2rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;margin-top:-1px;
-}
-.case-b-bar h2{font-family:var(--serif);font-size:1.3rem;color:var(--white);font-weight:400}
-.case-b-bar .en{font-family:var(--mont);font-size:.65rem;color:var(--gold);letter-spacing:.12em}
-.case-b-meta{display:flex;gap:2rem;margin-left:auto;flex-wrap:wrap}
-.case-b-meta div{font-size:.82rem}
-.case-b-meta dt{color:var(--gray-dim);font-size:.7rem;font-family:var(--mont)}
-.case-b-meta dd{color:var(--white)}
-.case-b-sub{position:absolute;bottom:5rem;right:1.5rem;width:200px;border:1px solid var(--gold-dim);cursor:zoom-in;box-shadow:0 8px 25px rgba(0,0,0,.5)}
-@media(max-width:900px){.case-b-sub{position:static;width:100%;margin-top:1rem}.case-b-meta{margin-left:0}}
-
-/* Layout C: full image + floating info + sub */
-.case-c-wrap{position:relative}
-.case-c-info{position:absolute;top:2rem;right:2rem;text-align:right;background:rgba(8,8,8,.7);padding:1rem 1.5rem;border-left:2px solid var(--gold)}
-.case-c-info h2{font-family:var(--serif);font-size:1.3rem;color:var(--white);font-weight:400}
-.case-c-info .en{font-family:var(--mont);font-size:.65rem;color:var(--gold);letter-spacing:.12em;margin-top:.3rem}
-.case-c-sub{position:absolute;bottom:2rem;right:2rem;width:200px;border:1px solid var(--gold-dim);cursor:zoom-in;box-shadow:0 8px 25px rgba(0,0,0,.5)}
-@media(max-width:900px){.case-c-info,.case-c-sub{position:static;width:100%;text-align:left;margin-top:1rem}}
-
-/* ===== Wellness ===== */
-.wellness-duo{display:grid;grid-template-columns:1fr 1.4fr;gap:1.5rem}
-.wellness-pair{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.wellness-quad{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
-.wellness-card{
-  position:relative;overflow:hidden;border:1px solid var(--gold-faint);background:var(--bg-card);
-  transition:transform .35s,border-color .35s;
-}
-.wellness-card:hover{transform:translateY(-4px);border-color:var(--gold-dim)}
-.wellness-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.wellness-card:hover img{transform:scale(1.05)}
-.wellness-card .label{
-  position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1.2rem 1rem;
-  background:linear-gradient(transparent,rgba(8,8,8,.9));
-  font-family:var(--serif);font-size:1.2rem;color:var(--white);
-}
-.wellness-card .label::after{content:'';display:block;width:40px;height:2px;background:var(--gold);margin-top:.4rem}
-.wellness-card .label .en{font-family:var(--mont);font-size:.6rem;color:var(--gold);letter-spacing:.1em;margin-left:.6rem}
-.wellness-quad .wellness-card{display:flex;flex-direction:column;height:460px}
-.wellness-quad .wellness-card img{flex:1}
-.wellness-quad .wellness-card .q-label{
-  padding:.9rem;text-align:center;border-top:1px solid var(--gold-faint);position:static;background:none;
-}
-.wellness-quad .q-label h4{font-family:var(--serif);font-size:1rem;color:var(--white);font-weight:400}
-.wellness-quad .q-label p{font-family:var(--mont);font-size:.6rem;color:var(--gold);letter-spacing:.08em;margin-top:.2rem}
-.wellness-quad .q-label::after{display:none}
-.wellness-more{
-  margin-top:2rem;text-align:center;font-size:.88rem;color:var(--gray-dim);letter-spacing:.05em;
-  padding:1rem;background:var(--bg-card);border:1px solid var(--gold-faint);
-}
-@media(max-width:1024px){.wellness-quad{grid-template-columns:repeat(2,1fr)}.wellness-quad .wellness-card{height:380px}}
-@media(max-width:700px){.wellness-duo,.wellness-pair{grid-template-columns:1fr}.wellness-quad{grid-template-columns:1fr}}
-
-/* ===== P19 Philosophy ===== */
-#philosophy{
-  background:linear-gradient(rgba(8,8,8,.84),rgba(8,8,8,.84)),url('assets/img/bg-map.jpg') center/cover no-repeat;
-  text-align:center;align-items:center;
-}
-#philosophy .ghost-char{right:12%;top:18%}
-.philosophy-lines{margin:2rem 0}
-.philosophy-lines p{font-family:var(--serif);font-size:2.5rem;color:var(--white);letter-spacing:.1em;line-height:1.7}
-.philosophy-lines p.gold{color:var(--gold)}
-.philosophy-desc{font-size:.95rem;color:var(--gray);max-width:650px;margin-top:1.5rem;letter-spacing:.04em;line-height:1.9}
-
-/* ===== P20 Contact ===== */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.contact-map{border:1px solid var(--gold-faint);transition:box-shadow .3s}
-.contact-map:hover{box-shadow:0 8px 30px rgba(0,0,0,.4)}
-.contact-map img{width:100%}
-.contact-map p{text-align:center;font-size:.78rem;color:var(--gray-dim);padding:.6rem}
-.contact-info .info-block{margin-bottom:1.8rem;padding-bottom:1.5rem;border-bottom:1px solid var(--gold-faint)}
-.contact-info .info-block:last-child{border-bottom:none}
-.contact-info .info-label{font-family:var(--mont);font-size:.68rem;color:var(--gold);letter-spacing:.22em;margin-bottom:.5rem}
-.contact-info .info-value{font-size:1.4rem;color:var(--white);font-family:var(--en)}
-.contact-info .info-value.addr{font-family:var(--sans);font-size:1.05rem}
-.contact-qr{display:flex;align-items:center;gap:1.2rem;margin-top:.8rem}
-.contact-qr img{width:110px;border:1px solid var(--gold-dim);padding:4px;background:var(--bg)}
-.contact-qr p{font-size:.85rem;color:var(--gray-dim)}
-@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
-
-/* ===== P21 Thanks ===== */
-#thanks{
-  background:linear-gradient(180deg,rgba(8,8,8,.9) 0%,rgba(8,8,8,.7) 50%,rgba(8,8,8,.9) 100%),
-             url('assets/img/cover.jpg') center/cover no-repeat;
-  text-align:center;align-items:center;
-}
-.thanks-title{font-family:var(--serif);font-size:4.5rem;color:var(--white);letter-spacing:.18em;margin-bottom:1rem}
-.thanks-en{font-family:var(--en);font-size:1.2rem;color:var(--gold);letter-spacing:.28em;margin-bottom:1.2rem}
-.thanks-sub{font-size:.95rem;color:var(--gray);letter-spacing:.08em;margin-bottom:3rem}
-.thanks-brand{font-family:var(--serif);font-size:1.1rem;color:var(--gold);letter-spacing:.2em}
-.thanks-brand-en{font-family:var(--mont);font-size:.68rem;color:var(--gold-dim);letter-spacing:.22em;margin-top:.3rem}
-
-/* ===== Lightbox ===== */
-.lightbox{
-  position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.92);
-  display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;
-  transition:opacity .3s,visibility .3s;cursor:zoom-out;
-}
-.lightbox.open{opacity:1;visibility:visible}
-.lightbox img{max-width:90vw;max-height:88vh;object-fit:contain;border:1px solid var(--gold-faint)}
-.lightbox-close{
-  position:absolute;top:1.5rem;right:2rem;color:var(--gold);font-size:2rem;cursor:pointer;
-  background:none;border:none;line-height:1;transition:transform .3s;
-}
-.lightbox-close:hover{transform:rotate(90deg)}
-.lightbox-caption{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);font-family:var(--mont);font-size:.75rem;color:var(--gold-dim);letter-spacing:.15em}
-
-/* ===== Responsive ===== */
-@media(max-width:900px){
-  section{padding:calc(var(--nav-h) + 2rem) 1.5rem 3rem}
-  .cover-title{font-size:3rem}
-  .section-title{font-size:1.8rem}
-  .divider-title{font-size:2.2rem}
-  .philosophy-lines p{font-size:1.6rem}
-  .thanks-title{font-size:3rem}
-  .ghost-char{font-size:10rem}
-  .page-meta{padding:0 1.5rem}
-  .case-b-bar{padding:1rem 1.2rem}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>空谷设计 | 酒店·康养·休闲空间设计</title>
+    <!-- 微信 / 社交平台链接卡片 -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://y123-h-spec.github.io/kongg/">
+    <meta property="og:title" content="空谷设计 KONGGU DESIGN | 酒店·康养·休闲空间设计">
+    <meta property="og:description" content="居于空谷 · 心在云际 —— 以东方意境，筑当代空间。酒店、康养与休闲空间设计。">
+    <meta property="og:image" content="https://y123-h-spec.github.io/kongg/images/og-cover.jpg">
+    <meta property="og:site_name" content="空谷设计">
+    <meta name="twitter:card" content="summary_large_image">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#F2EDE3',
+                        paper: '#0C0C0C',
+                        gold: '#D4AF6A',
+                        muted: '#A39D92',
+                        card: '#171717'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'Inter', 'system-ui', 'sans-serif'],
+                        en: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'card': '0 4px 24px rgba(0, 0, 0, 0.45)',
+                        'card-hover': '0 20px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(212, 175, 106, 0.08)',
+                        'glow': '0 0 40px rgba(212, 175, 106, 0.25)'
+                    },
+                    borderRadius: {
+                        '2xl': '20px',
+                        '3xl': '28px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-balance { text-wrap: balance; }
+            .bg-blur {
+                backdrop-filter: saturate(180%) blur(24px);
+                -webkit-backdrop-filter: saturate(180%) blur(24px);
+            }
+            .fade-in {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+            .fade-in.visible { opacity: 1; transform: translateY(0); }
+            .card-3d { transform-style: preserve-3d; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s ease, border-color 0.6s ease; }
+            .card-3d:hover { transform: translateY(-8px) rotateX(2deg); box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(212, 175, 106, 0.16); border-color: rgba(212, 175, 106, 0.45); }
+            .lightbox {
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+            .lightbox.active { opacity: 1; visibility: visible; }
+            .watermark {
+                position: fixed;
+                width: 200%;
+                height: 200%;
+                top: -50%;
+                left: -50%;
+                transform: rotate(-30deg);
+                pointer-events: none;
+                z-index: 9999;
+                opacity: 0.03;
+                font-size: 26px;
+                line-height: 200px;
+                color: #F2EDE3;
+                white-space: nowrap;
+                user-select: none;
+            }
+            .img-fade {
+                opacity: 0;
+                transition: opacity 0.8s ease;
+            }
+            .img-fade.loaded { opacity: 1; }
+            .filter-btn.active {
+                background-color: #D4AF6A;
+                color: #0C0C0C;
+                box-shadow: 0 4px 22px rgba(212, 175, 106, 0.35);
+            }
+            .filter-btn:hover:not(.active) {
+                color: #D4AF6A;
+                border-color: rgba(212, 175, 106, 0.5);
+            }
+            .hero-overlay {
+                background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%);
+            }
+            .section-hero {
+                background-size: cover;
+                background-position: center;
+                position: relative;
+            }
+            .section-hero::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.85) 100%);
+            }
+            .section-hero > * {
+                position: relative;
+                z-index: 1;
+            }
+        }
+            /* ===== 黑金主题 · 交互增强 ===== */
+            .progress-bar {
+                position: fixed;
+                top: 0; left: 0;
+                height: 2px; width: 0;
+                background: linear-gradient(90deg, #D4AF6A, #F1DCA8);
+                box-shadow: 0 0 12px rgba(212, 175, 106, 0.6);
+                z-index: 100;
+                transition: width 0.15s linear;
+            }
+            .shine { position: relative; overflow: hidden; }
+            .shine::after {
+                content: '';
+                position: absolute;
+                top: 0; left: -130%;
+                width: 55%; height: 100%;
+                background: linear-gradient(105deg, transparent, rgba(255,255,255,0.10), transparent);
+                transform: skewX(-20deg);
+                transition: left 0.75s ease;
+            }
+            .shine:hover::after { left: 170%; }
+            .nav-link { position: relative; }
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                left: 0; bottom: -4px;
+                width: 0; height: 1px;
+                background: #D4AF6A;
+                transition: width 0.35s ease;
+            }
+            .nav-link:hover::after { width: 100%; }
+    </style>
 </head>
-<body>
-
-<!-- Progress Bar -->
-<div class="progress-bar" id="progressBar"></div>
-
-<!-- Navigation -->
-<nav class="nav" id="nav">
-  <div class="nav-brand" onclick="scrollToSection('cover')">空谷设计<small>KONGGU DESIGN</small></div>
-  <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#cover" data-section="cover">封面</a></li>
-    <li><a href="#toc" data-section="toc">目录</a></li>
-    <li><a href="#prologue" data-section="prologue">序言</a></li>
-    <li><a href="#profile" data-section="profile">概况</a></li>
-    <li><a href="#capability" data-section="capability">能力</a></li>
-    <li><a href="#hotel" data-section="hotel">酒店</a></li>
-    <li><a href="#wellness" data-section="wellness">康养</a></li>
-    <li><a href="#philosophy" data-section="philosophy">理念</a></li>
-    <li><a href="#contact" data-section="contact">联系</a></li>
-  </ul>
-</nav>
-
-<!-- Side Dot Navigation -->
-<div class="dot-nav" id="dotNav">
-  <a href="#cover" data-section="cover"><span class="tooltip">封面</span></a>
-  <a href="#toc" data-section="toc"><span class="tooltip">目录</span></a>
-  <a href="#prologue" data-section="prologue"><span class="tooltip">序言</span></a>
-  <a href="#profile" data-section="profile"><span class="tooltip">公司概况</span></a>
-  <a href="#capability" data-section="capability"><span class="tooltip">核心能力</span></a>
-  <a href="#qualification" data-section="qualification"><span class="tooltip">资质认证</span></a>
-  <a href="#hotel" data-section="hotel"><span class="tooltip">酒店案例</span></a>
-  <a href="#wellness" data-section="wellness"><span class="tooltip">康养案例</span></a>
-  <a href="#philosophy" data-section="philosophy"><span class="tooltip">品牌理念</span></a>
-  <a href="#contact" data-section="contact"><span class="tooltip">联系我们</span></a>
-  <a href="#thanks" data-section="thanks"><span class="tooltip">致谢</span></a>
-</div>
-
-<!-- Back to Top -->
-<button class="back-top" id="backTop" aria-label="回到顶部">↑</button>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lightboxClose">×</button>
-  <img id="lightboxImg" src="" alt="">
-  <div class="lightbox-caption" id="lightboxCaption"></div>
-</div>
-
-<!-- ===== P1 Cover ===== -->
-<section id="cover">
-  <div class="cover-inner">
-    <div class="cover-brand reveal">空谷设计</div>
-    <div class="cover-brand-en reveal reveal-delay-1">KONGGU DESIGN</div>
-    <h1 class="cover-title reveal reveal-delay-1">空谷设计</h1>
-    <div class="cover-title-en reveal reveal-delay-2">KONGGU DESIGN</div>
-    <div class="section-line reveal reveal-delay-2"></div>
-    <p class="cover-sub reveal reveal-delay-3">酒店 · 康养 · 休闲空间设计 &nbsp;·&nbsp; 2026 企业简介</p>
-    <p class="cover-meta reveal reveal-delay-3">CHENGDU · CHINA · EST. 2010s</p>
-  </div>
-  <div class="cover-corner">HOTEL &amp; WELLNESS SPACE</div>
-  <div class="cover-scroll">SCROLL</div>
-</section>
-
-<!-- ===== P2 TOC ===== -->
-<section id="toc">
-  <div class="ghost-char">目</div>
-  <div class="container">
-    <div class="section-tag reveal">CONTENTS</div>
-    <h2 class="section-title reveal">目录</h2>
-    <div class="section-line reveal"></div>
-    <div class="toc-grid">
-      <a class="toc-card reveal" href="#prologue"><div class="num">01</div><h3>品牌序言</h3><div class="en">PROLOGUE</div><p class="desc">居于空谷，心在云际</p></a>
-      <a class="toc-card reveal reveal-delay-1" href="#profile"><div class="num">02</div><h3>公司概况</h3><div class="en">PROFILE</div><p class="desc">双品牌 · 双业务线</p></a>
-      <a class="toc-card reveal reveal-delay-2" href="#capability"><div class="num">03</div><h3>核心能力</h3><div class="en">CAPABILITY</div><p class="desc">全链条设计服务</p></a>
-      <a class="toc-card reveal" href="#hotel"><div class="num">04</div><h3>酒店代表案例</h3><div class="en">HOTEL PORTFOLIO</div><p class="desc">七大代表性酒店项目</p></a>
-      <a class="toc-card reveal reveal-delay-1" href="#wellness"><div class="num">05</div><h3>康养休闲案例</h3><div class="en">WELLNESS &amp; LEISURE</div><p class="desc">足浴健康与休闲空间</p></a>
-      <a class="toc-card reveal reveal-delay-2" href="#philosophy"><div class="num">06</div><h3>品牌理念</h3><div class="en">PHILOSOPHY</div><p class="desc">专业 · 敬畏 · 温度</p></a>
-      <a class="toc-card reveal reveal-delay-1" href="#contact" style="grid-column:1/-1;max-width:400px;justify-self:center;text-align:center"><div class="num">07</div><h3>联系我们</h3><div class="en">CONTACT</div><p class="desc">期待与您同行</p></a>
+<body class="bg-paper text-ink antialiased selection:bg-gold/20 overflow-x-hidden">
+    <!-- 防截图水印层 -->
+    <div class="watermark">
+        空谷设计 KONGGU DESIGN · 仅供客户阅览 · 版权所有
+        &nbsp;&nbsp;&nbsp;&nbsp;空谷设计 KONGGU DESIGN · 仅供客户阅览 · 版权所有
+        &nbsp;&nbsp;&nbsp;&nbsp;空谷设计 KONGGU DESIGN · 仅供客户阅览 · 版权所有
+        &nbsp;&nbsp;&nbsp;&nbsp;空谷设计 KONGGU DESIGN · 仅供客户阅览 · 版权所有
+        <br>
+        空谷设计 KONGGU DESIGN · 仅供客户阅览 · 版权所有
+        &nbsp;&nbsp;&nbsp;&nbsp;空谷设计 KONGGU DESIGN · 仅供客户阅览 · 版权所有
+        &nbsp;&nbsp;&nbsp;&nbsp;空谷设计 KONGGU DESIGN · 仅供客户阅览 · 版权所有
+        &nbsp;&nbsp;&nbsp;&nbsp;空谷设计 KONGGU DESIGN · 仅供客户阅览 · 版权所有
     </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>02 / 21</span></div>
-</section>
 
-<!-- ===== P3 Prologue ===== -->
-<section id="prologue">
-  <div class="ghost-char">序</div>
-  <div class="section-tag reveal">01 · 品牌序言 · PROLOGUE</div>
-  <p class="prologue-quote reveal">居于空谷 · 心在云际</p>
-  <div class="section-line reveal" style="margin:0 auto 1.5rem"></div>
-  <p class="prologue-sub reveal">以东方意境，筑当代空间；让每一处抵达，都成为归心之旅。</p>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>03 / 21</span></div>
-</section>
-
-<!-- ===== P4 Profile ===== -->
-<section id="profile">
-  <div class="container">
-    <div class="section-tag reveal">02 · 公司概况 · PROFILE</div>
-    <h2 class="section-title reveal">关于我们</h2>
-    <div class="section-line reveal"></div>
-    <div class="profile-grid">
-      <div class="reveal">
-        <div class="profile-stats">
-          <div class="stat-card"><div class="stat-num">10+</div><div class="stat-label">年行业深耕</div></div>
-          <div class="stat-card"><div class="stat-num">200+</div><div class="stat-label">酒店项目落地</div></div>
-          <div class="stat-card"><div class="stat-num">200+</div><div class="stat-label">康养休闲项目</div></div>
+    <!-- 图片灯箱 -->
+    <div id="lightbox" class="lightbox fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-6">
+        <button id="closeLightbox" class="absolute top-6 right-6 text-white/70 hover:text-white text-3xl w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all">
+            ×
+        </button>
+        <img id="lightboxImg" src="" alt="" class="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl">
+        <div id="lightboxText" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white text-center">
+            <h3 class="text-xl font-medium mb-1"></h3>
+            <p class="text-white/60 text-sm"></p>
         </div>
-      </div>
-      <div class="profile-body reveal reveal-delay-1">
-        <p>空谷设计创立于成都，深耕酒店与康养休闲空间设计十余年，是一家集前期策划、空间设计、软装陈设与落地运营支持于一体的专业设计公司。</p>
-        <p>公司以"空谷云际"专注酒店及商业空间，以"空谷设计"深耕足浴健康与休闲空间，双线并进、互为印证。以"商业价值导向"为设计原点，提供选址分析、商业规划、品牌定位、室内设计、软装搭配、VI 导视、成本控制、施工支持、家具软装、运营支持的全链条服务。</p>
-        <p>截至 2026 年，已累计落地 400+ 酒店、康养与休闲空间项目，覆盖国际会议中心、中高端酒店、足浴水汇等多元业态，是我们为客户持续创造价值的基础。</p>
-      </div>
     </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>04 / 21</span></div>
-</section>
 
-<!-- ===== P5 Capability ===== -->
-<section id="capability">
-  <div class="container">
-    <div class="section-tag reveal">03 · 核心能力 · CAPABILITY</div>
-    <h2 class="section-title reveal">全链条设计服务</h2>
-    <p class="reveal" style="color:var(--gray-dim);font-size:.9rem;margin-bottom:1rem">从选址分析到运营支持，一站式覆盖酒店、康养与休闲空间全生命周期</p>
-    <div class="section-line reveal"></div>
-    <div class="cap-grid">
-      <div class="cap-card reveal"><div class="num">01</div><div class="name">选址分析</div></div>
-      <div class="cap-card reveal reveal-delay-1"><div class="num">02</div><div class="name">商业规划</div></div>
-      <div class="cap-card reveal reveal-delay-2"><div class="num">03</div><div class="name">品牌定位</div></div>
-      <div class="cap-card reveal"><div class="num">04</div><div class="name">室内设计</div></div>
-      <div class="cap-card reveal reveal-delay-1"><div class="num">05</div><div class="name">软装搭配</div></div>
-      <div class="cap-card reveal"><div class="num">06</div><div class="name">VI 导视</div></div>
-      <div class="cap-card reveal reveal-delay-1"><div class="num">07</div><div class="name">成本控制</div></div>
-      <div class="cap-card reveal reveal-delay-2"><div class="num">08</div><div class="name">施工支持</div></div>
-      <div class="cap-card reveal"><div class="num">09</div><div class="name">家具软装</div></div>
-      <div class="cap-card reveal reveal-delay-1"><div class="num">10</div><div class="name">运营支持</div></div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>05 / 21</span></div>
-</section>
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-8 right-8 z-40 w-12 h-12 bg-card rounded-full shadow-card flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
+        <svg class="w-5 h-5 text-ink/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>
+    </button>
 
-<!-- ===== P6 Qualification ===== -->
-<section id="qualification">
-  <div class="container">
-    <div class="section-tag reveal">02 · 公司概况 · 资质认证 · QUALIFICATION</div>
-    <h2 class="section-title reveal">资质认证</h2>
-    <div class="section-line reveal"></div>
-    <div class="cert-grid">
-      <div class="cert-card reveal"><img class="case-img" src="assets/img/cert-01.jpg" alt="工程设计资质证书" data-caption="工程设计资质证书"><p>工程设计资质证书</p></div>
-      <div class="cert-card reveal reveal-delay-1"><img class="case-img" src="assets/img/cert-02.jpg" alt="营业执照" data-caption="营业执照"><p>营业执照</p></div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>06 / 21</span></div>
-</section>
-
-<!-- ===== P7 Hotel Divider ===== -->
-<section id="hotel" class="divider">
-  <div class="ghost-char">店</div>
-  <div class="container">
-    <div class="section-tag reveal">04 · 酒店代表案例 · HOTEL PORTFOLIO</div>
-    <h2 class="divider-title reveal">酒店代表案例</h2>
-    <div class="divider-en reveal">SELECTED WORKS · 2021 — 2026</div>
-    <div class="section-line reveal"></div>
-    <p class="divider-desc reveal">7 个代表性酒店与商业空间项目，覆盖会议中心、中高端酒店、度假酒店等多元业态</p>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>07 / 21</span></div>
-</section>
-
-<!-- ===== P8 云帆 A ===== -->
-<section id="case-yunfan">
-  <div class="container">
-    <div class="section-tag reveal">04 · 酒店代表案例</div>
-    <div class="case-header reveal">
-      <span class="case-no">01</span>
-      <h2 class="case-title">绵阳云帆国际会议中心</h2>
-      <span class="case-en">Mianyang Yunfan International Conference Center</span>
-    </div>
-    <div class="case-a">
-      <img class="case-img reveal" src="assets/img/hotel-yunfan-1.jpg" alt="绵阳云帆国际会议中心" data-caption="绵阳云帆国际会议中心">
-      <div class="reveal reveal-delay-1">
-        <dl class="case-meta">
-          <dt>时间</dt><dd>2021</dd>
-          <dt>地点</dt><dd>绵阳江油</dd>
-          <dt>面积</dt><dd>40000㎡</dd>
-          <dt>服务内容</dt><dd>空间设计</dd>
-        </dl>
-        <img class="case-sub" src="assets/img/hotel-yunfan-2.jpg" alt="云帆细节" data-caption="绵阳云帆国际会议中心 · 细节">
-      </div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>08 / 21</span></div>
-</section>
-
-<!-- ===== P9 科创 B ===== -->
-<section id="case-subo">
-  <div class="container">
-    <div class="section-tag reveal">04 · 酒店代表案例</div>
-    <div class="case-header reveal">
-      <span class="case-no">02</span>
-      <h2 class="case-title">成都科创宿泊码头酒店</h2>
-      <span class="case-en">Chengdu Kechuang Subo Wharf Hotel</span>
-    </div>
-    <div class="case-b-wrap reveal">
-      <img class="case-img" src="assets/img/hotel-subo-1.jpg" alt="成都科创宿泊码头酒店" data-caption="成都科创宿泊码头酒店">
-      <img class="case-b-sub" src="assets/img/hotel-subo-2.jpg" alt="科创细节" data-caption="成都科创宿泊码头酒店 · 细节">
-      <div class="case-b-bar">
-        <div><h2>成都科创宿泊码头酒店</h2><div class="en">Chengdu Kechuang Subo Wharf Hotel</div></div>
-        <dl class="case-b-meta">
-          <div><dt>时间</dt><dd>2021</dd></div>
-          <div><dt>地点</dt><dd>四川成都</dd></div>
-          <div><dt>面积</dt><dd>10000㎡</dd></div>
-          <div><dt>服务</dt><dd>空间设计</dd></div>
-        </dl>
-      </div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>09 / 21</span></div>
-</section>
-
-<!-- ===== P10 岳池 C ===== -->
-<section id="case-yuechi">
-  <div class="container">
-    <div class="section-tag reveal">04 · 酒店代表案例</div>
-    <div class="case-c-wrap reveal">
-      <span class="case-no">03</span>
-      <img class="case-img" src="assets/img/hotel-yuechi-1.jpg" alt="四川岳池钻石酒店" data-caption="四川岳池钻石酒店">
-      <div class="case-c-info"><h2>四川岳池钻石酒店</h2><div class="en">Sichuan Yuechi Diamond Hotel</div></div>
-      <img class="case-c-sub" src="assets/img/hotel-yuechi-2.jpg" alt="岳池细节" data-caption="四川岳池钻石酒店 · 细节">
-    </div>
-    <dl class="case-meta reveal" style="margin-top:1.2rem;max-width:500px">
-      <dt>时间</dt><dd>2022</dd><dt>地点</dt><dd>四川岳池</dd><dt>面积</dt><dd>10000㎡</dd><dt>服务内容</dt><dd>空间设计</dd>
-    </dl>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>10 / 21</span></div>
-</section>
-
-<!-- ===== P11 盛铂 A ===== -->
-<section id="case-shengbo">
-  <div class="container">
-    <div class="section-tag reveal">04 · 酒店代表案例</div>
-    <div class="case-header reveal">
-      <span class="case-no">04</span>
-      <h2 class="case-title">西安盛铂清居酒店</h2>
-      <span class="case-en">Xi'an Shengbo Qingju Hotel</span>
-    </div>
-    <div class="case-a">
-      <img class="case-img reveal" src="assets/img/hotel-shengbo-1.jpg" alt="西安盛铂清居酒店" data-caption="西安盛铂清居酒店">
-      <div class="reveal reveal-delay-1">
-        <dl class="case-meta">
-          <dt>时间</dt><dd>2023</dd><dt>地点</dt><dd>陕西西安</dd><dt>面积</dt><dd>7000㎡</dd><dt>服务内容</dt><dd>空间设计</dd>
-        </dl>
-        <img class="case-sub" src="assets/img/hotel-shengbo-2.jpg" alt="盛铂细节" data-caption="西安盛铂清居酒店 · 细节">
-      </div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>11 / 21</span></div>
-</section>
-
-<!-- ===== P12 豪生 B ===== -->
-<section id="case-haosheng">
-  <div class="container">
-    <div class="section-tag reveal">04 · 酒店代表案例</div>
-    <div class="case-header reveal">
-      <span class="case-no">05</span>
-      <h2 class="case-title">成都新都豪生Life酒店</h2>
-      <span class="case-en">Howard Johnson Life Hotel Chengdu</span>
-    </div>
-    <div class="case-b-wrap reveal">
-      <img class="case-img" src="assets/img/hotel-haosheng-1.jpg" alt="成都新都豪生Life酒店" data-caption="成都新都豪生Life酒店">
-      <img class="case-b-sub" src="assets/img/hotel-haosheng-2.jpg" alt="豪生细节" data-caption="成都新都豪生Life酒店 · 细节">
-      <div class="case-b-bar">
-        <div><h2>成都新都豪生Life酒店</h2><div class="en">Howard Johnson Life Hotel Chengdu</div></div>
-        <dl class="case-b-meta">
-          <div><dt>时间</dt><dd>2023</dd></div><div><dt>地点</dt><dd>四川成都</dd></div><div><dt>面积</dt><dd>12000㎡</dd></div><div><dt>服务</dt><dd>空间设计</dd></div>
-        </dl>
-      </div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>12 / 21</span></div>
-</section>
-
-<!-- ===== P13 凯莱希 C ===== -->
-<section id="case-kalais">
-  <div class="container">
-    <div class="section-tag reveal">04 · 酒店代表案例</div>
-    <div class="case-c-wrap reveal">
-      <span class="case-no">06</span>
-      <img class="case-img" src="assets/img/hotel-kalais-1.jpg" alt="凯莱希假日酒店" data-caption="凯莱希假日酒店">
-      <div class="case-c-info"><h2>凯莱希假日酒店</h2><div class="en">KALAS Holiday Hotel</div></div>
-      <img class="case-c-sub" src="assets/img/hotel-kalais-2.jpg" alt="凯莱希细节" data-caption="凯莱希假日酒店 · 细节">
-    </div>
-    <dl class="case-meta reveal" style="margin-top:1.2rem;max-width:500px">
-      <dt>时间</dt><dd>2022</dd><dt>地点</dt><dd>四川成都</dd><dt>面积</dt><dd>4000㎡</dd><dt>服务内容</dt><dd>空间设计</dd>
-    </dl>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>13 / 21</span></div>
-</section>
-
-<!-- ===== P14 廷泊 A ===== -->
-<section id="case-tingbo">
-  <div class="container">
-    <div class="section-tag reveal">04 · 酒店代表案例</div>
-    <div class="case-header reveal">
-      <span class="case-no">07</span>
-      <h2 class="case-title">廷泊酒店</h2>
-      <span class="case-en">TILL BRIGHT Hotel</span>
-    </div>
-    <div class="case-a">
-      <img class="case-img reveal" src="assets/img/hotel-tingbo-1.jpg" alt="廷泊酒店" data-caption="廷泊酒店">
-      <div class="reveal reveal-delay-1">
-        <dl class="case-meta">
-          <dt>时间</dt><dd>2026</dd><dt>地点</dt><dd>四川康定</dd><dt>面积</dt><dd>6000㎡</dd><dt>服务内容</dt><dd>空间设计</dd>
-        </dl>
-        <img class="case-sub" src="assets/img/hotel-tingbo-2.jpg" alt="廷泊细节" data-caption="廷泊酒店 · 细节">
-      </div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>14 / 21</span></div>
-</section>
-
-<!-- ===== P15 Wellness Divider ===== -->
-<section id="wellness" class="divider">
-  <div class="ghost-char">养</div>
-  <div class="container">
-    <div class="section-tag reveal">05 · 康养休闲案例 · WELLNESS &amp; LEISURE</div>
-    <h2 class="divider-title reveal">康养休闲案例</h2>
-    <div class="divider-en reveal">WELLNESS &amp; LEISURE SELECTED WORKS</div>
-    <div class="section-line reveal"></div>
-    <p class="divider-desc reveal">十余年深耕足浴健康与休闲空间设计，累计落地 200+ 项目，精选代表作品</p>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>15 / 21</span></div>
-</section>
-
-<!-- ===== P16 克拉拉 + 朋乐迹 ===== -->
-<section id="wellness-1">
-  <div class="container">
-    <div class="section-tag reveal">05 · 康养休闲案例</div>
-    <h2 class="section-title reveal" style="font-size:1.8rem">精选康养项目</h2>
-    <div class="section-line reveal"></div>
-    <div class="wellness-duo">
-      <div class="wellness-card reveal" style="height:480px">
-        <img class="case-img" src="assets/img/wellness-kelala.jpg" alt="克拉拉" data-caption="克拉拉 · 足道养生">
-        <div class="label">克拉拉</div>
-      </div>
-      <div class="wellness-card reveal reveal-delay-1" style="height:480px">
-        <img class="case-img" src="assets/img/wellness-pengleji.jpg" alt="朋乐迹" data-caption="朋乐迹 · K歌沐足">
-        <div class="label">朋乐迹</div>
-      </div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>16 / 21</span></div>
-</section>
-
-<!-- ===== P17 莲足纪 + 臻享足道 ===== -->
-<section id="wellness-2">
-  <div class="container">
-    <div class="section-tag reveal">05 · 康养休闲案例</div>
-    <h2 class="section-title reveal" style="font-size:1.8rem">足道养生系列</h2>
-    <div class="section-line reveal"></div>
-    <div class="wellness-pair">
-      <div class="wellness-card reveal" style="height:340px">
-        <img class="case-img" src="assets/img/wellness-lianzuji.jpg" alt="莲足纪" data-caption="莲足纪 · 中式足道">
-        <div class="label">莲足纪<span class="en">中式足道 · LIANZUJI</span></div>
-      </div>
-      <div class="wellness-card reveal reveal-delay-1" style="height:340px">
-        <img class="case-img" src="assets/img/wellness-zhenxiang.jpg" alt="臻享足道" data-caption="臻享足道 · 健康足道">
-        <div class="label">臻享足道<span class="en">健康足道 · ZHENXIANG</span></div>
-      </div>
-    </div>
-    <p class="wellness-more reveal">更多项目：春天印象 · 沐芳华 · 云足道 · 观澜境会馆 · 涪江月 · 寻境K歌沐足 · 飞花令</p>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>17 / 21</span></div>
-</section>
-
-<!-- ===== P18 四格 ===== -->
-<section id="wellness-3">
-  <div class="container">
-    <div class="section-tag reveal">05 · 康养休闲案例</div>
-    <h2 class="section-title reveal" style="font-size:1.8rem">多元休闲业态</h2>
-    <div class="section-line reveal"></div>
-    <div class="wellness-quad">
-      <div class="wellness-card reveal"><img class="case-img" src="assets/img/wellness-pengyue.jpg" alt="朋悦·泰" data-caption="朋悦·泰 · 养生SPA"><div class="q-label"><h4>朋悦·泰</h4><p>养生SPA · PENGYUE</p></div></div>
-      <div class="wellness-card reveal reveal-delay-1"><img class="case-img" src="assets/img/wellness-nanjinhui.jpg" alt="楠锦荟" data-caption="楠锦荟 · 水汇休闲"><div class="q-label"><h4>楠锦荟</h4><p>水汇休闲 · NANJINHUI</p></div></div>
-      <div class="wellness-card reveal"><img class="case-img" src="assets/img/wellness-meizu.jpg" alt="美足时光" data-caption="美足时光 · 休闲足道"><div class="q-label"><h4>美足时光</h4><p>休闲足道 · MEIZU</p></div></div>
-      <div class="wellness-card reveal reveal-delay-1"><img class="case-img" src="assets/img/wellness-qiyin.jpg" alt="栖隐" data-caption="栖隐 · 禅意养生"><div class="q-label"><h4>栖隐</h4><p>禅意养生 · QIYIN</p></div></div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>18 / 21</span></div>
-</section>
-
-<!-- ===== P19 Philosophy ===== -->
-<section id="philosophy">
-  <div class="ghost-char">心</div>
-  <div class="section-tag reveal">06 · 品牌理念 · PHILOSOPHY</div>
-  <div class="philosophy-lines">
-    <p class="reveal">执专业之尺</p>
-    <p class="reveal reveal-delay-1">怀敬畏之心</p>
-    <p class="reveal reveal-delay-2 gold">筑有温度的空间</p>
-  </div>
-  <div class="section-line reveal" style="margin:1.5rem auto"></div>
-  <p class="philosophy-desc reveal">以专业为尺、以敬畏为心、以温度为魂——让空间不止于设计，更成为值得回味的场域。</p>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>19 / 21</span></div>
-</section>
-
-<!-- ===== P20 Contact ===== -->
-<section id="contact">
-  <div class="container">
-    <div class="section-tag reveal">07 · 联系我们 · CONTACT</div>
-    <h2 class="section-title reveal">联系我们</h2>
-    <div class="section-line reveal"></div>
-    <div class="contact-grid">
-      <div class="contact-map reveal">
-        <img src="assets/img/map-chengdu.jpg" alt="成都区位图">
-        <p>成都 · 利星行广场（区位示意）</p>
-      </div>
-      <div class="contact-info reveal reveal-delay-1">
-        <div class="info-block">
-          <div class="info-label">TEL</div>
-          <div class="info-value">136 7808 0880</div>
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-6">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
+            <a href="#top" class="flex items-center gap-3">
+                <img src="images/footer-logo.png" alt="空谷设计" class="h-6 object-contain" onerror="this.style.display='none'">
+                <span class="text-lg font-semibold tracking-wide">空谷设计</span>
+                <span class="text-xs text-muted font-en tracking-widest uppercase">Konggu Design</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm text-muted">
+                <a href="#prologue" class="nav-link hover:text-ink transition-colors">品牌序言</a>
+                <a href="#profile" class="nav-link hover:text-ink transition-colors">公司概况</a>
+                <a href="#capability" class="nav-link hover:text-ink transition-colors">核心能力</a>
+                <a href="#hotel" class="nav-link hover:text-ink transition-colors">酒店案例</a>
+                <a href="#wellness" class="nav-link hover:text-ink transition-colors">康养案例</a>
+                <a href="#contact" class="nav-link hover:text-ink transition-colors">联系我们</a>
+            </div>
         </div>
-        <div class="info-block">
-          <div class="info-label">ADDRESS</div>
-          <div class="info-value addr">四川成都 · 利星行广场</div>
+    </nav>
+
+    <!-- Hero 首屏 -->
+    <section id="top" class="min-h-screen flex flex-col justify-center items-center relative px-6 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="images/hero-bg.png" alt="" class="w-full h-full object-cover opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-black"></div>
         </div>
-        <div class="info-block">
-          <div class="info-label">WECHAT</div>
-          <div class="contact-qr">
-            <img src="assets/img/qrcode.png" alt="微信二维码">
-            <p>扫码咨询 · 期待与您同行</p>
-          </div>
+        <div class="text-center fade-in relative z-10">
+            <p class="text-gold text-sm tracking-[0.3em] uppercase mb-6 font-en">Hotel & Wellness Space</p>
+            <h1 class="text-[clamp(2.5rem,8vw,5.5rem)] font-light tracking-wider mb-4">空谷设计</h1>
+            <p class="text-muted text-lg md:text-xl font-light mb-12 tracking-wide">居于空谷 · 心在云际</p>
+            <p class="text-muted/80 max-w-xl mx-auto text-balance leading-relaxed text-lg">
+                以东方意境，筑当代空间<br>
+                让每一处抵达，都成为归心之旅
+            </p>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>20 / 21</span></div>
-</section>
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 text-muted text-xs tracking-widest animate-bounce z-10">
+            向下滚动探索
+        </div>
+    </section>
 
-<!-- ===== P21 Thanks ===== -->
-<section id="thanks">
-  <h2 class="thanks-title reveal">谢谢</h2>
-  <div class="thanks-en reveal reveal-delay-1">THANK YOU</div>
-  <div class="section-line reveal" style="margin:0 auto 1.5rem"></div>
-  <p class="thanks-sub reveal reveal-delay-2">感谢关注，期待与您同行</p>
-  <div class="thanks-brand reveal">空谷设计</div>
-  <div class="thanks-brand-en reveal reveal-delay-1">KONGGU DESIGN</div>
-  <div class="page-meta" style="justify-content:center"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span></div>
-</section>
+    <!-- 01 品牌序言 -->
+    <section id="prologue" class="py-28 md:py-36 px-6 section-hero" style="background-image: url('images/prologue-bg.jpg')">
+        <div class="max-w-4xl mx-auto fade-in">
+            <div class="flex items-center gap-4 mb-16">
+                <span class="text-gold text-xs font-en tracking-widest">01 / PROLOGUE</span>
+                <div class="h-px bg-ink/10 flex-1 max-w-[100px]"></div>
+            </div>
+            <h2 class="text-3xl md:text-5xl font-light mb-10 tracking-wide">品牌序言</h2>
+            <p class="text-xl text-muted leading-loose max-w-2xl">
+                以东方意境，筑当代空间；让每一处抵达，都成为归心之旅。
+            </p>
+        </div>
+    </section>
 
-<script>
-// ===== Scroll Progress + Nav State + Back to Top =====
-const progressBar=document.getElementById('progressBar');
-const nav=document.getElementById('nav');
-const backTop=document.getElementById('backTop');
-const navLinks=document.querySelectorAll('.nav-links a');
-const dotLinks=document.querySelectorAll('.dot-nav a');
-const sections=document.querySelectorAll('section[id]');
+    <!-- 02 公司概况 -->
+    <section id="profile" class="py-28 md:py-36 px-6 bg-[#101010]">
+        <div class="max-w-6xl mx-auto fade-in">
+            <div class="flex items-center gap-4 mb-16">
+                <span class="text-gold text-xs font-en tracking-widest">02 / PROFILE</span>
+                <div class="h-px bg-ink/10 flex-1 max-w-[100px]"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-20 items-start mb-24">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-light mb-10 tracking-wide">关于我们</h2>
+                    <div class="space-y-6 text-muted leading-relaxed text-lg">
+                        <p>空谷设计创立于成都，深耕酒店与康养休闲空间设计十余年，是一家集前期策划、空间设计、软装陈设与落地运营支持于一体的专业设计公司。</p>
+                        <p>公司以「空谷云际」专注酒店及商业空间，以「空谷设计」深耕足浴健康与休闲空间，双线并进、互为印证。</p>
+                        <p>以「商业价值导向」为设计原点，提供从选址分析到运营支持的全链条服务。截至2026年，已累计落地400+酒店、康养与休闲空间项目。</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="bg-card rounded-3xl p-8 shadow-card text-center card-3d">
+                        <div class="text-5xl font-light text-gold mb-3 counter" data-target="10">0</div>
+                        <div class="text-sm text-muted">年行业深耕</div>
+                        <div class="text-xs text-gold/60 mt-1 font-en">+</div>
+                    </div>
+                    <div class="bg-card rounded-3xl p-8 shadow-card text-center card-3d">
+                        <div class="text-5xl font-light text-gold mb-3 counter" data-target="200">0</div>
+                        <div class="text-sm text-muted">酒店项目落地</div>
+                        <div class="text-xs text-gold/60 mt-1 font-en">+</div>
+                    </div>
+                    <div class="bg-card rounded-3xl p-8 shadow-card text-center card-3d">
+                        <div class="text-5xl font-light text-gold mb-3 counter" data-target="200">0</div>
+                        <div class="text-sm text-muted">康养休闲项目</div>
+                        <div class="text-xs text-gold/60 mt-1 font-en">+</div>
+                    </div>
+                </div>
+            </div>
 
-function onScroll(){
-  const st=window.scrollY;
-  const dh=document.documentElement.scrollHeight-window.innerHeight;
-  progressBar.style.width=(dh>0?(st/dh*100):0)+'%';
-  nav.classList.toggle('scrolled',st>50);
-  backTop.classList.toggle('show',st>600);
-  // active section
-  let current='';
-  sections.forEach(s=>{if(st>=s.offsetTop-200)current=s.id});
-  navLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===current));
-  dotLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===current));
-}
-window.addEventListener('scroll',onScroll,{passive:true});
-onScroll();
+            <!-- 资质认证 -->
+            <div class="bg-card rounded-3xl p-10 shadow-card card-3d">
+                <h3 class="text-xl font-medium mb-8">资质认证</h3>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <div class="aspect-[3/4] bg-paper rounded-2xl overflow-hidden flex items-center justify-center">
+                            <img src="images/cert-license.png" alt="营业执照" class="w-full h-full object-contain p-4">
+                        </div>
+                        <p class="text-center text-sm text-muted">营业执照</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="aspect-[3/2] bg-paper rounded-2xl overflow-hidden flex items-center justify-center">
+                            <img src="images/cert-qualification.jpg" alt="工程设计资质证书" class="w-full h-full object-contain p-4">
+                        </div>
+                        <p class="text-center text-sm text-muted">建筑装饰设计专项乙级资质</p>
+                    </div>
+                </div>
+                <div class="mt-8 pt-8 border-t border-ink/5 grid md:grid-cols-2 gap-6 text-sm text-muted">
+                    <div class="space-y-2">
+                        <p><span class="text-ink/70 font-medium">企业名称：</span>四川空谷云际建筑设计有限公司</p>
+                        <p><span class="text-ink/70 font-medium">详细地址：</span>四川省成都市成华区龙潭工业园航天路5号1栋15楼1502号</p>
+                        <p><span class="text-ink/70 font-medium">统一社会信用代码：</span>91510100MACEEB8J48</p>
+                    </div>
+                    <div class="space-y-2">
+                        <p><span class="text-ink/70 font-medium">资质等级：</span>建筑装饰设计专项乙级</p>
+                        <p><span class="text-ink/70 font-medium">证书编号：</span>A251040044</p>
+                        <p><span class="text-ink/70 font-medium">有效期至：</span>2028年09月06日</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-// ===== Back to Top =====
-backTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+    <!-- 03 核心能力 -->
+    <section id="capability" class="py-28 md:py-36 px-6">
+        <div class="max-w-6xl mx-auto fade-in">
+            <div class="flex items-center gap-4 mb-16">
+                <span class="text-gold text-xs font-en tracking-widest">03 / CAPABILITY</span>
+                <div class="h-px bg-ink/10 flex-1 max-w-[100px]"></div>
+            </div>
+            
+            <h2 class="text-3xl md:text-5xl font-light mb-6 tracking-wide">核心能力</h2>
+            <p class="text-muted mb-16 max-w-xl text-lg">全链条设计服务，一站式覆盖酒店、康养与休闲空间全生命周期</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">01</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">选址分析</div>
+                </div>
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">02</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">商业规划</div>
+                </div>
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">03</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">品牌定位</div>
+                </div>
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">04</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">室内设计</div>
+                </div>
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">05</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">软装搭配</div>
+                </div>
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">06</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">VI 导视</div>
+                </div>
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">07</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">成本控制</div>
+                </div>
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">08</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">施工支持</div>
+                </div>
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">09</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">家具软装</div>
+                </div>
+                <div class="bg-card rounded-2xl p-8 shadow-card card-3d cursor-pointer group shine">
+                    <div class="text-gold font-en text-lg mb-4">10</div>
+                    <div class="font-medium text-lg group-hover:text-gold transition-colors">运营支持</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-// ===== Mobile Nav Toggle =====
-const navToggle=document.getElementById('navToggle');
-const navLinksEl=document.getElementById('navLinks');
-navToggle.addEventListener('click',()=>navLinksEl.classList.toggle('open'));
-navLinksEl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinksEl.classList.remove('open')));
+    <!-- 04 酒店代表案例 -->
+    <section id="hotel" class="py-28 md:py-36 px-6 section-hero" style="background-image: url('images/hotel-section-bg.jpg')">
+        <div class="max-w-6xl mx-auto fade-in">
+            <div class="flex items-center gap-4 mb-16">
+                <span class="text-gold text-xs font-en tracking-widest">04 / HOTEL PORTFOLIO</span>
+                <div class="h-px bg-ink/10 flex-1 max-w-[100px]"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-light mb-4 tracking-wide">酒店代表案例</h2>
+                    <p class="text-muted max-w-xl text-lg">7个代表性酒店与商业空间项目，覆盖会议中心、中高端酒店、度假酒店等多元业态</p>
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <button class="filter-btn shine active px-5 py-2 rounded-full text-sm bg-card border border-white/10 shadow-sm transition-all" data-filter="all">全部</button>
+                    <button class="filter-btn shine px-5 py-2 rounded-full text-sm bg-card border border-white/10 shadow-sm transition-all" data-filter="conference">会议中心</button>
+                    <button class="filter-btn shine px-5 py-2 rounded-full text-sm bg-card border border-white/10 shadow-sm transition-all" data-filter="hotel">精品酒店</button>
+                    <button class="filter-btn shine px-5 py-2 rounded-full text-sm bg-card border border-white/10 shadow-sm transition-all" data-filter="resort">度假酒店</button>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="hotelGrid">
+                <!-- 案例1 绵阳云帆 -->
+                <div class="hotel-item bg-card rounded-3xl overflow-hidden shadow-card card-3d cursor-pointer" data-category="conference" data-img="images/hotel-1-yunfan.jpg" data-title="绵阳云帆国际会议中心" data-desc="2021 · 绵阳江油 · 40000㎡">
+                    <div class="aspect-[4/3] overflow-hidden relative group bg-[#201D18]">
+                        <img src="images/hotel-1-yunfan.jpg" alt="绵阳云帆国际会议中心" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-gold/95 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-4">绵阳云帆国际会议中心</h3>
+                        <div class="grid grid-cols-2 gap-3 text-sm text-muted">
+                            <div>时间 · 2021</div>
+                            <div>地点 · 绵阳江油</div>
+                            <div>面积 · 40000㎡</div>
+                            <div>服务 · 空间设计</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 案例2 成都科创 -->
+                <div class="hotel-item bg-card rounded-3xl overflow-hidden shadow-card card-3d cursor-pointer" data-category="hotel" data-img="images/hotel-2-kechuang.jpg" data-title="成都科创宿泊码头酒店" data-desc="2021 · 四川成都 · 10000㎡">
+                    <div class="aspect-[4/3] overflow-hidden relative group bg-[#201D18]">
+                        <img src="images/hotel-2-kechuang.jpg" alt="成都科创宿泊码头酒店" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-gold/95 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-4">成都科创宿泊码头酒店</h3>
+                        <div class="grid grid-cols-2 gap-3 text-sm text-muted">
+                            <div>时间 · 2021</div>
+                            <div>地点 · 四川成都</div>
+                            <div>面积 · 10000㎡</div>
+                            <div>服务 · 空间设计</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 案例3 岳池钻石 -->
+                <div class="hotel-item bg-card rounded-3xl overflow-hidden shadow-card card-3d cursor-pointer" data-category="hotel" data-img="images/hotel-3-diamond.jpg" data-title="四川岳池钻石酒店" data-desc="2022 · 四川岳池 · 10000㎡">
+                    <div class="aspect-[4/3] overflow-hidden relative group bg-[#201D18]">
+                        <img src="images/hotel-3-diamond.jpg" alt="四川岳池钻石酒店" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-gold/95 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-4">四川岳池钻石酒店</h3>
+                        <div class="grid grid-cols-2 gap-3 text-sm text-muted">
+                            <div>时间 · 2022</div>
+                            <div>地点 · 四川岳池</div>
+                            <div>面积 · 10000㎡</div>
+                            <div>服务 · 空间设计</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 案例4 西安盛铂 -->
+                <div class="hotel-item bg-card rounded-3xl overflow-hidden shadow-card card-3d cursor-pointer" data-category="hotel" data-img="images/hotel-4-shengbo.jpg" data-title="西安盛铂清居酒店" data-desc="2023 · 陕西西安 · 7000㎡">
+                    <div class="aspect-[4/3] overflow-hidden relative group bg-[#201D18]">
+                        <img src="images/hotel-4-shengbo.jpg" alt="西安盛铂清居酒店" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-gold/95 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-4">西安盛铂清居酒店</h3>
+                        <div class="grid grid-cols-2 gap-3 text-sm text-muted">
+                            <div>时间 · 2023</div>
+                            <div>地点 · 陕西西安</div>
+                            <div>面积 · 7000㎡</div>
+                            <div>服务 · 空间设计</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 案例5 新都豪生 -->
+                <div class="hotel-item bg-card rounded-3xl overflow-hidden shadow-card card-3d cursor-pointer" data-category="hotel" data-img="images/hotel-5-howard.jpg" data-title="成都新都豪生Life酒店" data-desc="2023 · 四川成都 · 12000㎡">
+                    <div class="aspect-[4/3] overflow-hidden relative group bg-[#201D18]">
+                        <img src="images/hotel-5-howard.jpg" alt="成都新都豪生Life酒店" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-gold/95 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-4">成都新都豪生Life酒店</h3>
+                        <div class="grid grid-cols-2 gap-3 text-sm text-muted">
+                            <div>时间 · 2023</div>
+                            <div>地点 · 四川成都</div>
+                            <div>面积 · 12000㎡</div>
+                            <div>服务 · 空间设计</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 案例6 凯莱希 -->
+                <div class="hotel-item bg-card rounded-3xl overflow-hidden shadow-card card-3d cursor-pointer" data-category="hotel" data-img="images/hotel-6-kalasi.jpg" data-title="凯莱希假日酒店" data-desc="2022 · 四川成都 · 4000㎡">
+                    <div class="aspect-[4/3] overflow-hidden relative group bg-[#201D18]">
+                        <img src="images/hotel-6-kalasi.jpg" alt="凯莱希假日酒店" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-gold/95 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-4">凯莱希假日酒店</h3>
+                        <div class="grid grid-cols-2 gap-3 text-sm text-muted">
+                            <div>时间 · 2022</div>
+                            <div>地点 · 四川成都</div>
+                            <div>面积 · 4000㎡</div>
+                            <div>服务 · 空间设计</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 案例7 廷泊 -->
+                <div class="hotel-item bg-card rounded-3xl overflow-hidden shadow-card card-3d cursor-pointer md:col-span-2 lg:col-span-1" data-category="resort" data-img="images/hotel-7-tingbo.jpg" data-title="廷泊酒店" data-desc="2026 · 四川康定 · 6000㎡">
+                    <div class="aspect-[4/3] overflow-hidden relative group bg-[#201D18]">
+                        <img src="images/hotel-7-tingbo.jpg" alt="廷泊酒店" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-gold text-black text-xs px-3 py-1 rounded-full z-10">NEW · 2026新作</div>
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-gold/95 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-4">廷泊酒店</h3>
+                        <div class="grid grid-cols-2 gap-3 text-sm text-muted">
+                            <div>时间 · 2026</div>
+                            <div>地点 · 四川康定</div>
+                            <div>面积 · 6000㎡</div>
+                            <div>服务 · 空间设计</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-// ===== Scroll to Section (brand click) =====
-function scrollToSection(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'})}
+    <!-- 05 康养休闲案例 -->
+    <section id="wellness" class="py-28 md:py-36 px-6 section-hero" style="background-image: url('images/wellness-section-bg.jpg')">
+        <div class="max-w-6xl mx-auto fade-in">
+            <div class="flex items-center gap-4 mb-16">
+                <span class="text-gold text-xs font-en tracking-widest">05 / WELLNESS & LEISURE</span>
+                <div class="h-px bg-ink/10 flex-1 max-w-[100px]"></div>
+            </div>
+            
+            <h2 class="text-3xl md:text-5xl font-light mb-6 tracking-wide">康养休闲案例</h2>
+            <p class="text-muted mb-16 max-w-xl text-lg">十余年深耕足浴健康与休闲空间设计，累计落地200+项目</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <!-- 克拉拉 -->
+                <div class="bg-card rounded-3xl shadow-card card-3d cursor-pointer overflow-hidden group" onclick="openLightbox('images/wellness-1-kelala.jpg','克拉拉','精品足道 · KELALA')">
+                    <div class="aspect-[4/5] overflow-hidden bg-[#201D18]">
+                        <img src="images/wellness-1-kelala.jpg" alt="克拉拉" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-5 text-center">
+                        <div class="font-medium text-lg mb-1 group-hover:text-gold transition-colors">克拉拉</div>
+                        <div class="text-sm text-muted">精品足道</div>
+                    </div>
+                </div>
+                <!-- 朋乐迹 -->
+                <div class="bg-card rounded-3xl shadow-card card-3d cursor-pointer overflow-hidden group" onclick="openLightbox('images/wellness-2-pengleji.jpg','朋乐迹','休闲空间 · PENGLEJI')">
+                    <div class="aspect-[4/5] overflow-hidden bg-[#201D18]">
+                        <img src="images/wellness-2-pengleji.jpg" alt="朋乐迹" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-5 text-center">
+                        <div class="font-medium text-lg mb-1 group-hover:text-gold transition-colors">朋乐迹</div>
+                        <div class="text-sm text-muted">休闲空间</div>
+                    </div>
+                </div>
+                <!-- 莲足纪 -->
+                <div class="bg-card rounded-3xl shadow-card card-3d cursor-pointer overflow-hidden group" onclick="openLightbox('images/wellness-3-lianzuji.jpg','莲足纪','中式足道 · LIANZUJI')">
+                    <div class="aspect-[4/5] overflow-hidden bg-[#201D18]">
+                        <img src="images/wellness-3-lianzuji.jpg" alt="莲足纪" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-5 text-center">
+                        <div class="font-medium text-lg mb-1 group-hover:text-gold transition-colors">莲足纪</div>
+                        <div class="text-sm text-muted">中式足道</div>
+                    </div>
+                </div>
+                <!-- 臻享足道 -->
+                <div class="bg-card rounded-3xl shadow-card card-3d cursor-pointer overflow-hidden group" onclick="openLightbox('images/wellness-4-zhenxiang.jpg','臻享足道','健康足道 · ZHENXIANG')">
+                    <div class="aspect-[4/5] overflow-hidden bg-[#201D18]">
+                        <img src="images/wellness-4-zhenxiang.jpg" alt="臻享足道" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-5 text-center">
+                        <div class="font-medium text-lg mb-1 group-hover:text-gold transition-colors">臻享足道</div>
+                        <div class="text-sm text-muted">健康足道</div>
+                    </div>
+                </div>
+                <!-- 朋悦·泰 -->
+                <div class="bg-card rounded-3xl shadow-card card-3d cursor-pointer overflow-hidden group" onclick="openLightbox('images/wellness-5-pengyue.jpg','朋悦·泰','养生SPA · PENGYUE')">
+                    <div class="aspect-[4/5] overflow-hidden bg-[#201D18]">
+                        <img src="images/wellness-5-pengyue.jpg" alt="朋悦·泰" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-5 text-center">
+                        <div class="font-medium text-lg mb-1 group-hover:text-gold transition-colors">朋悦·泰</div>
+                        <div class="text-sm text-muted">养生SPA</div>
+                    </div>
+                </div>
+                <!-- 楠锦荟 -->
+                <div class="bg-card rounded-3xl shadow-card card-3d cursor-pointer overflow-hidden group" onclick="openLightbox('images/wellness-6-nanjinhui.jpg','楠锦荟','水汇休闲 · NANJINHUI')">
+                    <div class="aspect-[4/5] overflow-hidden bg-[#201D18]">
+                        <img src="images/wellness-6-nanjinhui.jpg" alt="楠锦荟" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-5 text-center">
+                        <div class="font-medium text-lg mb-1 group-hover:text-gold transition-colors">楠锦荟</div>
+                        <div class="text-sm text-muted">水汇休闲</div>
+                    </div>
+                </div>
+                <!-- 美足时光 -->
+                <div class="bg-card rounded-3xl shadow-card card-3d cursor-pointer overflow-hidden group" onclick="openLightbox('images/wellness-7-meizu.jpg','美足时光','休闲足道 · MEIZU')">
+                    <div class="aspect-[4/5] overflow-hidden bg-[#201D18]">
+                        <img src="images/wellness-7-meizu.jpg" alt="美足时光" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-5 text-center">
+                        <div class="font-medium text-lg mb-1 group-hover:text-gold transition-colors">美足时光</div>
+                        <div class="text-sm text-muted">休闲足道</div>
+                    </div>
+                </div>
+                <!-- 栖隐 -->
+                <div class="bg-card rounded-3xl shadow-card card-3d cursor-pointer overflow-hidden group" onclick="openLightbox('images/wellness-8-qiyin.jpg','栖隐','禅意养生 · QIYIN')">
+                    <div class="aspect-[4/5] overflow-hidden bg-[#201D18]">
+                        <img src="images/wellness-8-qiyin.jpg" alt="栖隐" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-5 text-center">
+                        <div class="font-medium text-lg mb-1 group-hover:text-gold transition-colors">栖隐</div>
+                        <div class="text-sm text-muted">禅意养生</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-muted text-center text-lg">
+                更多项目：春天印象 · 沐芳华 · 云足道 · 观澜境会馆 · 涪江月 · 寻境K歌沐足 · 飞花令
+            </p>
+        </div>
+    </section>
 
-// ===== Reveal on Scroll =====
-const revealEls=document.querySelectorAll('.reveal');
-const revealObserver=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}});
-},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
-revealEls.forEach(el=>revealObserver.observe(el));
+    <!-- 06 品牌理念 -->
+    <section class="py-28 md:py-36 px-6 bg-[#0A0A0A] text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <img src="images/philosophy-bg.jpg" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="max-w-5xl mx-auto text-center fade-in relative z-10">
+            <span class="text-gold/80 text-xs font-en tracking-widest">06 / PHILOSOPHY</span>
+            <h2 class="text-3xl md:text-5xl font-light mt-8 mb-20 tracking-wide">品牌理念</h2>
+            
+            <div class="grid md:grid-cols-3 gap-16 mb-20">
+                <div class="group">
+                    <div class="text-gold text-3xl mb-6 group-hover:scale-110 transition-transform duration-500">执专业之尺</div>
+                    <p class="text-white/60 leading-relaxed">以专业为根基，严谨对待每一个项目细节</p>
+                </div>
+                <div class="group">
+                    <div class="text-gold text-3xl mb-6 group-hover:scale-110 transition-transform duration-500">怀敬畏之心</div>
+                    <p class="text-white/60 leading-relaxed">敬畏空间、敬畏客户、敬畏每一份信任</p>
+                </div>
+                <div class="group">
+                    <div class="text-gold text-3xl mb-6 group-hover:scale-110 transition-transform duration-500">筑有温度的空间</div>
+                    <p class="text-white/60 leading-relaxed">让空间不止于设计，更成为值得回味的场域</p>
+                </div>
+            </div>
+            
+            <p class="text-white/50 max-w-2xl mx-auto leading-relaxed text-lg">
+                以专业为尺、以敬畏为心、以温度为魂——让空间不止于设计，更成为值得回味的场域。
+            </p>
+        </div>
+    </section>
 
-// ===== Lightbox =====
-const lightbox=document.getElementById('lightbox');
-const lightboxImg=document.getElementById('lightboxImg');
-const lightboxCaption=document.getElementById('lightboxCaption');
-const lightboxClose=document.getElementById('lightboxClose');
+    <!-- 07 联系我们 -->
+    <section id="contact" class="py-28 md:py-36 px-6">
+        <div class="max-w-5xl mx-auto fade-in">
+            <div class="flex items-center gap-4 mb-16">
+                <span class="text-gold text-xs font-en tracking-widest">07 / CONTACT</span>
+                <div class="h-px bg-ink/10 flex-1 max-w-[100px]"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-light mb-8 tracking-wide">联系我们</h2>
+                    <p class="text-muted mb-12 text-xl">期待与您同行</p>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <div class="text-sm text-muted mb-2">联系电话</div>
+                            <a href="tel:13678080880" class="text-2xl tracking-wide font-light inline-block transition-colors hover:text-gold">136 7808 0880</a>
+                        </div>
+                        <div>
+                            <div class="text-sm text-muted mb-2">公司地址</div>
+                            <div class="leading-relaxed text-lg">
+                                四川成都 · 利星行广场<br>
+                                <span class="text-muted">成华区龙潭工业园航天路5号</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 区位地图 -->
+                    <div class="mt-10 rounded-2xl overflow-hidden shadow-card">
+                        <img src="images/contact-map.png" alt="公司区位图" class="w-full h-auto">
+                    </div>
+                </div>
+                
+                <div class="bg-card rounded-3xl p-10 shadow-card card-3d">
+                    <div class="aspect-square bg-paper rounded-2xl flex items-center justify-center mb-6 overflow-hidden">
+                        <img src="images/contact-qrcode.png" alt="微信咨询二维码" class="w-3/4 h-3/4 object-contain">
+                    </div>
+                    <p class="text-center text-muted">扫码咨询 · 期待与您同行</p>
+                    <div class="mt-6 pt-6 border-t border-ink/5 text-center">
+                        <img src="images/contact-icon.png" alt="" class="h-8 mx-auto object-contain opacity-60" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-document.querySelectorAll('.case-img,.case-sub,.case-b-sub,.case-c-sub').forEach(img=>{
-  img.addEventListener('click',()=>{
-    lightboxImg.src=img.src;
-    lightboxCaption.textContent=img.dataset.caption||img.alt||'';
-    lightbox.classList.add('open');
-    document.body.style.overflow='hidden';
-  });
-});
-function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';lightboxImg.src=''}
-lightboxClose.addEventListener('click',closeLightbox);
-lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+    <!-- 页脚 -->
+    <footer class="py-12 px-6 border-t border-ink/5 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <img src="images/footer-bg.png" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted relative z-10">
+            <div class="flex items-center gap-3">
+                <img src="images/footer-logo.png" alt="空谷设计" class="h-5 object-contain" onerror="this.style.display='none'">
+                <span>© 2026 空谷设计 KONGGU DESIGN. All Rights Reserved.</span>
+            </div>
+            <div class="font-en tracking-wider">CHENGDU · CHINA · EST. 2010S</div>
+        </div>
+    </footer>
 
-// ===== Keyboard Navigation (Arrow keys) =====
-const sectionIds=Array.from(sections).map(s=>s.id);
-let currentIdx=0;
-document.addEventListener('keydown',e=>{
-  if(lightbox.classList.contains('open'))return;
-  if(e.key==='ArrowDown'||e.key==='PageDown'){
-    e.preventDefault();
-    currentIdx=Math.min(sectionIds.length-1,currentIdx+1);
-    document.getElementById(sectionIds[currentIdx])?.scrollIntoView({behavior:'smooth'});
-  }else if(e.key==='ArrowUp'||e.key==='PageUp'){
-    e.preventDefault();
-    currentIdx=Math.max(0,currentIdx-1);
-    document.getElementById(sectionIds[currentIdx])?.scrollIntoView({behavior:'smooth'});
-  }else if(e.key==='Home'){
-    e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});
-  }else if(e.key==='End'){
-    e.preventDefault();window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
-  }
-});
-// sync currentIdx on scroll
-window.addEventListener('scroll',()=>{
-  const st=window.scrollY;
-  sections.forEach((s,i)=>{if(st>=s.offsetTop-300)currentIdx=i});
-},{passive:true});
-</script>
+    <script>
+        // ========== 隐私保护 ==========
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('selectstart', e => e.preventDefault());
+        document.addEventListener('dragstart', e => e.preventDefault());
+        
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); return false; }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') { e.preventDefault(); return false; }
+            if (e.key === 'F12' || ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'i')) { e.preventDefault(); return false; }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'u') { e.preventDefault(); return false; }
+            if (e.key === 'PrintScreen') { e.preventDefault(); return false; }
+        });
+
+        // ========== 导航栏滚动效果 ==========
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('bg-black/85', 'bg-blur', 'shadow-sm', 'py-3');
+                navbar.classList.remove('py-6');
+            } else {
+                navbar.classList.remove('bg-black/85', 'bg-blur', 'shadow-sm', 'py-3');
+                navbar.classList.add('py-6');
+            }
+
+            if (window.scrollY > 500) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-ink', 'font-medium');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('text-ink', 'font-medium');
+                }
+            });
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ========== 平滑滚动 ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ========== 滚动渐入动画 ==========
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.querySelector('.counter')) {
+                        startCounters();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ========== 数字滚动动画 ==========
+        let countersStarted = false;
+        function startCounters() {
+            if (countersStarted) return;
+            countersStarted = true;
+            
+            document.querySelectorAll('.counter').forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.innerText = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // ========== 案例筛选 ==========
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const hotelItems = document.querySelectorAll('.hotel-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+                
+                hotelItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    if (filter === 'all' || category === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // ========== 图片灯箱 ==========
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxText = document.querySelector('#lightboxText h3');
+        const lightboxDesc = document.querySelector('#lightboxText p');
+        const closeLightbox = document.getElementById('closeLightbox');
+
+        function openLightbox(imgSrc, title, desc) {
+            lightboxImg.src = imgSrc;
+            lightboxText.textContent = title;
+            lightboxDesc.textContent = desc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        hotelItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.getAttribute('data-img');
+                const title = item.getAttribute('data-title');
+                const desc = item.getAttribute('data-desc');
+                openLightbox(imgSrc, title, desc);
+            });
+        });
+
+        function closeLightboxFunc() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeLightbox.addEventListener('click', closeLightboxFunc);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightboxFunc();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightboxFunc();
+            }
+        });
+
+        // ========== 页面加载触发首屏动画 ==========
+        window.addEventListener('load', () => {
+            document.querySelector('.fade-in').classList.add('visible');
+        });
+        // ========== 黑金主题 · 增强交互 ==========
+
+        // 顶部金色滚动进度条
+        const progressBar = document.createElement('div');
+        progressBar.className = 'progress-bar';
+        document.body.appendChild(progressBar);
+        let scrollTicking = false;
+        window.addEventListener('scroll', () => {
+            if (!scrollTicking) {
+                scrollTicking = true;
+                requestAnimationFrame(() => {
+                    const h = document.documentElement;
+                    const max = h.scrollHeight - h.clientHeight;
+                    progressBar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+                    scrollTicking = false;
+                });
+            }
+        }, { passive: true });
+
+        // 卡片 3D 跟随鼠标倾斜（触屏设备自动跳过）
+        if (window.matchMedia('(hover: hover)').matches) {
+            document.querySelectorAll('.card-3d').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const r = card.getBoundingClientRect();
+                    const px = (e.clientX - r.left) / r.width - 0.5;
+                    const py = (e.clientY - r.top) / r.height - 0.5;
+                    card.style.transform = 'translateY(-6px) rotateX(' + (-py * 6).toFixed(2) + 'deg) rotateY(' + (px * 6).toFixed(2) + 'deg)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+        }
+
+        // 首屏背景微视差
+        const heroBgImg = document.querySelector('#top .absolute.inset-0 img');
+        if (heroBgImg) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY < window.innerHeight * 1.2) {
+                    heroBgImg.style.transform = 'translateY(' + (window.scrollY * 0.22).toFixed(1) + 'px) scale(1.06)';
+                }
+            }, { passive: true });
+        }
+    </script>
 </body>
 </html>
