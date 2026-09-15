@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>空谷设计 KONGGU DESIGN · 2026 企业简介</title>
+<meta name="description" content="空谷设计 — 酒店 · 康养 · 休闲空间设计，深耕十余年，累计落地 400+ 项目。">
+<style>
+/* ===== Reset & Variables ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;--bg-soft:#0e0e0e;--bg-card:#111;
+  --gold:#d4af37;--gold-light:#e8c96a;--gold-dark:#b8860b;
+  --gold-dim:rgba(212,175,55,.5);--gold-faint:rgba(212,175,55,.15);--gold-line:rgba(212,175,55,.25);
+  --white:#fff;--gray:#bebebe;--gray-dim:#888;--gray-faint:#555;
+  --serif:'Noto Serif SC','Source Han Serif SC','SimSun',serif;
+  --sans:'Noto Sans SC','Source Han Sans SC','Microsoft YaHei',sans-serif;
+  --en:'Playfair Display',Georgia,serif;
+  --mont:'Montserrat','Helvetica Neue',Arial,sans-serif;
+  --nav-h:56px;--maxw:1280px;--section-py:5rem;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--sans);line-height:1.7;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--gold);text-decoration:none}
+::selection{background:var(--gold);color:var(--bg)}
+
+/* ===== Scroll Progress Bar ===== */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-dark),var(--gold-light));z-index:200;width:0;transition:width .1s linear}
+
+/* ===== Navigation ===== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(8,8,8,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--gold-faint);
+  padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);
+  transition:background .3s;
+}
+.nav.scrolled{background:rgba(8,8,8,.97);box-shadow:0 2px 20px rgba(0,0,0,.5)}
+.nav-brand{font-family:var(--serif);font-size:1rem;color:var(--gold);letter-spacing:.15em;cursor:pointer}
+.nav-brand small{font-family:var(--mont);font-size:.6rem;color:var(--gray-dim);letter-spacing:.2em;margin-left:.5rem}
+.nav-links{display:flex;gap:1.1rem;list-style:none;align-items:center}
+.nav-links a{
+  font-family:var(--mont);font-size:.68rem;letter-spacing:.1em;color:var(--gray);
+  transition:color .3s;text-transform:uppercase;position:relative;padding:.3rem 0;
+}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-toggle{display:none;background:none;border:none;color:var(--gold);font-size:1.5rem;cursor:pointer;padding:.5rem}
+@media(max-width:1024px){
+  .nav-links{
+    position:fixed;top:var(--nav-h);right:-100%;width:260px;height:calc(100vh - var(--nav-h));
+    background:rgba(8,8,8,.98);flex-direction:column;gap:0;padding:1rem 0;
+    transition:right .35s ease;border-left:1px solid var(--gold-faint);
+  }
+  .nav-links.open{right:0}
+  .nav-links li{width:100%}
+  .nav-links a{display:block;padding:.9rem 1.5rem;font-size:.8rem}
+  .nav-links a::after{display:none}
+  .nav-toggle{display:block}
+}
+
+/* ===== Side Dot Nav ===== */
+.dot-nav{
+  position:fixed;right:1.2rem;top:50%;transform:translateY(-50%);z-index:90;
+  display:flex;flex-direction:column;gap:.7rem;
+}
+.dot-nav a{
+  width:8px;height:8px;border-radius:50%;background:var(--gray-faint);
+  transition:all .3s;position:relative;display:block;
+}
+.dot-nav a:hover,.dot-nav a.active{background:var(--gold);transform:scale(1.4)}
+.dot-nav a .tooltip{
+  position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  background:rgba(8,8,8,.95);border:1px solid var(--gold-faint);color:var(--gold);
+  font-family:var(--mont);font-size:.65rem;letter-spacing:.1em;padding:.3rem .7rem;
+  white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s;border-radius:2px;
+}
+.dot-nav a:hover .tooltip{opacity:1}
+@media(max-width:1024px){.dot-nav{display:none}}
+
+/* ===== Back to Top ===== */
+.back-top{
+  position:fixed;bottom:2rem;right:2rem;z-index:90;width:44px;height:44px;
+  background:rgba(8,8,8,.8);border:1px solid var(--gold-dim);border-radius:50%;
+  color:var(--gold);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transform:translateY(10px);transition:all .3s;
+}
+.back-top.show{opacity:1;visibility:visible;transform:translateY(0)}
+.back-top:hover{background:var(--gold);color:var(--bg)}
+
+/* ===== Section Common ===== */
+section{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:calc(var(--nav-h) + 3rem) 3rem 4rem;position:relative;overflow:hidden;
+}
+.container{max-width:var(--maxw);width:100%;margin:0 auto}
+.section-tag{
+  font-family:var(--mont);font-size:.68rem;letter-spacing:.25em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.8rem;
+}
+.section-tag::before{content:'';width:24px;height:1px;background:var(--gold)}
+.section-title{
+  font-family:var(--serif);font-size:2.6rem;font-weight:400;color:var(--white);
+  letter-spacing:.06em;margin-bottom:.8rem;line-height:1.2;
+}
+.section-line{width:60px;height:2px;background:var(--gold);margin:1rem 0 2rem}
+.ghost-char{
+  position:absolute;font-family:var(--serif);font-size:18rem;color:rgba(212,175,55,.05);
+  pointer-events:none;user-select:none;line-height:1;font-weight:400;
+}
+.page-meta{
+  position:absolute;bottom:1.5rem;left:0;right:0;display:flex;justify-content:space-between;
+  padding:0 3rem;font-family:var(--mont);font-size:.62rem;color:var(--gray-faint);letter-spacing:.15em;
+  pointer-events:none;
+}
+
+/* ===== Reveal Animation ===== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* ===== P1 Cover ===== */
+#cover{
+  padding:0;justify-content:flex-start;
+  background:linear-gradient(90deg,rgba(8,8,8,.93) 0%,rgba(8,8,8,.6) 45%,rgba(8,8,8,.2) 100%),
+             url('assets/img/cover.jpg') center/cover no-repeat;
+}
+.cover-inner{padding:10rem 3rem 4rem;max-width:800px}
+.cover-brand{font-family:var(--serif);font-size:1.1rem;color:var(--gold);letter-spacing:.2em;margin-bottom:.3rem}
+.cover-brand-en{font-family:var(--mont);font-size:.68rem;color:var(--gold-dim);letter-spacing:.25em;margin-bottom:5rem}
+.cover-title{font-family:var(--serif);font-size:5rem;font-weight:400;color:var(--white);letter-spacing:.12em;line-height:1.1;margin-bottom:1rem}
+.cover-title-en{font-family:var(--en);font-size:1.1rem;color:var(--gold);letter-spacing:.3em;margin-bottom:1.5rem}
+.cover-sub{font-size:.95rem;color:var(--gray);letter-spacing:.08em;margin-bottom:5rem}
+.cover-meta{font-family:var(--mont);font-size:.72rem;color:var(--gold-dim);letter-spacing:.25em}
+.cover-corner{position:absolute;bottom:3rem;right:3rem;font-family:var(--mont);font-size:.68rem;color:var(--gray-faint);letter-spacing:.2em;text-align:right}
+.cover-scroll{
+  position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--gold-dim);
+  font-family:var(--mont);font-size:.6rem;letter-spacing:.2em;animation:bounce 2s infinite;
+}
+.cover-scroll::after{content:'';width:1px;height:30px;background:linear-gradient(var(--gold),transparent)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ===== P2 TOC ===== */
+#toc .ghost-char{right:8%;top:12%}
+.toc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1rem}
+.toc-card{
+  background:var(--bg-card);border:1px solid var(--gold-faint);padding:1.8rem 1.5rem;
+  transition:all .35s;cursor:pointer;position:relative;overflow:hidden;
+}
+.toc-card::before{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--gold);transition:width .35s}
+.toc-card:hover{border-color:var(--gold-dim);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.toc-card:hover::before{width:100%}
+.toc-card .num{font-family:var(--en);font-size:2rem;color:var(--gold);line-height:1;margin-bottom:.8rem}
+.toc-card h3{font-family:var(--serif);font-size:1.2rem;color:var(--white);font-weight:400;margin-bottom:.3rem}
+.toc-card .en{font-family:var(--mont);font-size:.65rem;color:var(--gold);letter-spacing:.12em;margin-bottom:.5rem}
+.toc-card .desc{font-size:.82rem;color:var(--gray-dim);line-height:1.5}
+@media(max-width:900px){.toc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+
+/* ===== P3 Prologue ===== */
+#prologue{
+  background:linear-gradient(rgba(8,8,8,.8),rgba(8,8,8,.8)),url('assets/img/bg-map.jpg') center/cover no-repeat;
+  text-align:center;align-items:center;
+}
+#prologue .ghost-char{left:50%;top:8%;transform:translateX(-50%)}
+.prologue-quote{font-family:var(--serif);font-size:2.8rem;color:var(--white);letter-spacing:.12em;margin:2rem 0 1.5rem;line-height:1.4}
+.prologue-sub{font-size:1rem;color:var(--gray);letter-spacing:.08em;max-width:650px}
+
+/* ===== P4 Profile ===== */
+.profile-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:4rem;align-items:start}
+.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2rem 0}
+.stat-card{
+  background:var(--bg-card);border:1px solid var(--gold-faint);padding:1.5rem 1rem;text-align:center;
+  transition:border-color .3s;
+}
+.stat-card:hover{border-color:var(--gold-dim)}
+.stat-num{font-family:var(--en);font-size:2.2rem;color:var(--gold);line-height:1;margin-bottom:.5rem}
+.stat-label{font-size:.8rem;color:var(--gray-dim)}
+.profile-body p{font-size:.92rem;color:var(--gray);margin-bottom:1.1rem;line-height:2}
+@media(max-width:900px){.profile-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* ===== P5 Capability ===== */
+.cap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:1rem}
+.cap-card{
+  background:var(--bg-card);border:1px solid var(--gold-faint);padding:1.3rem .8rem;text-align:center;
+  transition:all .3s;
+}
+.cap-card:hover{border-color:var(--gold-dim);background:rgba(212,175,55,.05);transform:translateY(-3px)}
+.cap-card .num{font-family:var(--en);font-size:1.1rem;color:var(--gold-dim);margin-bottom:.5rem}
+.cap-card .name{font-family:var(--serif);font-size:1rem;color:var(--white)}
+@media(max-width:1024px){.cap-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.cap-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== P6 Qualification ===== */
+.cert-grid{display:flex;gap:3rem;justify-content:center;align-items:flex-start;margin-top:2rem;flex-wrap:wrap}
+.cert-card{text-align:center;transition:transform .3s}
+.cert-card:hover{transform:scale(1.02)}
+.cert-card img{border:1px solid var(--gold-faint);max-height:400px;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.cert-card p{font-size:.88rem;color:var(--gray);margin-top:1rem}
+
+/* ===== Section Divider ===== */
+.divider{background:linear-gradient(rgba(8,8,8,.82),rgba(8,8,8,.82)),url('assets/img/bg-map.jpg') center/cover no-repeat}
+.divider .ghost-char{right:8%;top:12%}
+.divider-title{font-family:var(--serif);font-size:3.5rem;color:var(--white);letter-spacing:.08em;margin-bottom:.8rem;line-height:1.2}
+.divider-en{font-family:var(--mont);font-size:.9rem;color:var(--gold);letter-spacing:.22em;margin-bottom:1.2rem}
+.divider-desc{font-size:.95rem;color:var(--gray);max-width:650px;line-height:1.8}
+
+/* ===== Case Common ===== */
+.case-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.5rem}
+.case-no{font-family:var(--en);font-size:1.8rem;color:var(--gold-dim);line-height:1}
+.case-title{font-family:var(--serif);font-size:1.6rem;color:var(--white);font-weight:400;letter-spacing:.04em}
+.case-en{font-family:var(--mont);font-size:.7rem;color:var(--gold);letter-spacing:.12em;margin-left:auto}
+.case-img{width:100%;border:1px solid var(--gold-faint);transition:transform .4s,box-shadow .4s;cursor:zoom-in}
+.case-img:hover{box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.case-meta{display:grid;grid-template-columns:auto 1fr;gap:.5rem 1.5rem;font-size:.88rem;margin-top:1.2rem}
+.case-meta dt{color:var(--gray-dim);font-family:var(--mont);font-size:.75rem;letter-spacing:.08em}
+.case-meta dd{color:var(--white)}
+
+/* Layout A: left image + right info */
+.case-a{display:grid;grid-template-columns:1.5fr 1fr;gap:2.5rem;align-items:start}
+.case-a .case-sub{margin-top:1.5rem;width:100%;border:1px solid var(--gold-faint);cursor:zoom-in}
+@media(max-width:900px){.case-a{grid-template-columns:1fr}}
+
+/* Layout B: full image + bottom bar + floating sub */
+.case-b-wrap{position:relative}
+.case-b-bar{
+  background:rgba(8,8,8,.92);border-top:2px solid var(--gold);
+  padding:1.2rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;margin-top:-1px;
+}
+.case-b-bar h2{font-family:var(--serif);font-size:1.3rem;color:var(--white);font-weight:400}
+.case-b-bar .en{font-family:var(--mont);font-size:.65rem;color:var(--gold);letter-spacing:.12em}
+.case-b-meta{display:flex;gap:2rem;margin-left:auto;flex-wrap:wrap}
+.case-b-meta div{font-size:.82rem}
+.case-b-meta dt{color:var(--gray-dim);font-size:.7rem;font-family:var(--mont)}
+.case-b-meta dd{color:var(--white)}
+.case-b-sub{position:absolute;bottom:5rem;right:1.5rem;width:200px;border:1px solid var(--gold-dim);cursor:zoom-in;box-shadow:0 8px 25px rgba(0,0,0,.5)}
+@media(max-width:900px){.case-b-sub{position:static;width:100%;margin-top:1rem}.case-b-meta{margin-left:0}}
+
+/* Layout C: full image + floating info + sub */
+.case-c-wrap{position:relative}
+.case-c-info{position:absolute;top:2rem;right:2rem;text-align:right;background:rgba(8,8,8,.7);padding:1rem 1.5rem;border-left:2px solid var(--gold)}
+.case-c-info h2{font-family:var(--serif);font-size:1.3rem;color:var(--white);font-weight:400}
+.case-c-info .en{font-family:var(--mont);font-size:.65rem;color:var(--gold);letter-spacing:.12em;margin-top:.3rem}
+.case-c-sub{position:absolute;bottom:2rem;right:2rem;width:200px;border:1px solid var(--gold-dim);cursor:zoom-in;box-shadow:0 8px 25px rgba(0,0,0,.5)}
+@media(max-width:900px){.case-c-info,.case-c-sub{position:static;width:100%;text-align:left;margin-top:1rem}}
+
+/* ===== Wellness ===== */
+.wellness-duo{display:grid;grid-template-columns:1fr 1.4fr;gap:1.5rem}
+.wellness-pair{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.wellness-quad{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.wellness-card{
+  position:relative;overflow:hidden;border:1px solid var(--gold-faint);background:var(--bg-card);
+  transition:transform .35s,border-color .35s;
+}
+.wellness-card:hover{transform:translateY(-4px);border-color:var(--gold-dim)}
+.wellness-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.wellness-card:hover img{transform:scale(1.05)}
+.wellness-card .label{
+  position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1.2rem 1rem;
+  background:linear-gradient(transparent,rgba(8,8,8,.9));
+  font-family:var(--serif);font-size:1.2rem;color:var(--white);
+}
+.wellness-card .label::after{content:'';display:block;width:40px;height:2px;background:var(--gold);margin-top:.4rem}
+.wellness-card .label .en{font-family:var(--mont);font-size:.6rem;color:var(--gold);letter-spacing:.1em;margin-left:.6rem}
+.wellness-quad .wellness-card{display:flex;flex-direction:column;height:460px}
+.wellness-quad .wellness-card img{flex:1}
+.wellness-quad .wellness-card .q-label{
+  padding:.9rem;text-align:center;border-top:1px solid var(--gold-faint);position:static;background:none;
+}
+.wellness-quad .q-label h4{font-family:var(--serif);font-size:1rem;color:var(--white);font-weight:400}
+.wellness-quad .q-label p{font-family:var(--mont);font-size:.6rem;color:var(--gold);letter-spacing:.08em;margin-top:.2rem}
+.wellness-quad .q-label::after{display:none}
+.wellness-more{
+  margin-top:2rem;text-align:center;font-size:.88rem;color:var(--gray-dim);letter-spacing:.05em;
+  padding:1rem;background:var(--bg-card);border:1px solid var(--gold-faint);
+}
+@media(max-width:1024px){.wellness-quad{grid-template-columns:repeat(2,1fr)}.wellness-quad .wellness-card{height:380px}}
+@media(max-width:700px){.wellness-duo,.wellness-pair{grid-template-columns:1fr}.wellness-quad{grid-template-columns:1fr}}
+
+/* ===== P19 Philosophy ===== */
+#philosophy{
+  background:linear-gradient(rgba(8,8,8,.84),rgba(8,8,8,.84)),url('assets/img/bg-map.jpg') center/cover no-repeat;
+  text-align:center;align-items:center;
+}
+#philosophy .ghost-char{right:12%;top:18%}
+.philosophy-lines{margin:2rem 0}
+.philosophy-lines p{font-family:var(--serif);font-size:2.5rem;color:var(--white);letter-spacing:.1em;line-height:1.7}
+.philosophy-lines p.gold{color:var(--gold)}
+.philosophy-desc{font-size:.95rem;color:var(--gray);max-width:650px;margin-top:1.5rem;letter-spacing:.04em;line-height:1.9}
+
+/* ===== P20 Contact ===== */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.contact-map{border:1px solid var(--gold-faint);transition:box-shadow .3s}
+.contact-map:hover{box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.contact-map img{width:100%}
+.contact-map p{text-align:center;font-size:.78rem;color:var(--gray-dim);padding:.6rem}
+.contact-info .info-block{margin-bottom:1.8rem;padding-bottom:1.5rem;border-bottom:1px solid var(--gold-faint)}
+.contact-info .info-block:last-child{border-bottom:none}
+.contact-info .info-label{font-family:var(--mont);font-size:.68rem;color:var(--gold);letter-spacing:.22em;margin-bottom:.5rem}
+.contact-info .info-value{font-size:1.4rem;color:var(--white);font-family:var(--en)}
+.contact-info .info-value.addr{font-family:var(--sans);font-size:1.05rem}
+.contact-qr{display:flex;align-items:center;gap:1.2rem;margin-top:.8rem}
+.contact-qr img{width:110px;border:1px solid var(--gold-dim);padding:4px;background:var(--bg)}
+.contact-qr p{font-size:.85rem;color:var(--gray-dim)}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+
+/* ===== P21 Thanks ===== */
+#thanks{
+  background:linear-gradient(180deg,rgba(8,8,8,.9) 0%,rgba(8,8,8,.7) 50%,rgba(8,8,8,.9) 100%),
+             url('assets/img/cover.jpg') center/cover no-repeat;
+  text-align:center;align-items:center;
+}
+.thanks-title{font-family:var(--serif);font-size:4.5rem;color:var(--white);letter-spacing:.18em;margin-bottom:1rem}
+.thanks-en{font-family:var(--en);font-size:1.2rem;color:var(--gold);letter-spacing:.28em;margin-bottom:1.2rem}
+.thanks-sub{font-size:.95rem;color:var(--gray);letter-spacing:.08em;margin-bottom:3rem}
+.thanks-brand{font-family:var(--serif);font-size:1.1rem;color:var(--gold);letter-spacing:.2em}
+.thanks-brand-en{font-family:var(--mont);font-size:.68rem;color:var(--gold-dim);letter-spacing:.22em;margin-top:.3rem}
+
+/* ===== Lightbox ===== */
+.lightbox{
+  position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.92);
+  display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;
+  transition:opacity .3s,visibility .3s;cursor:zoom-out;
+}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox img{max-width:90vw;max-height:88vh;object-fit:contain;border:1px solid var(--gold-faint)}
+.lightbox-close{
+  position:absolute;top:1.5rem;right:2rem;color:var(--gold);font-size:2rem;cursor:pointer;
+  background:none;border:none;line-height:1;transition:transform .3s;
+}
+.lightbox-close:hover{transform:rotate(90deg)}
+.lightbox-caption{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);font-family:var(--mont);font-size:.75rem;color:var(--gold-dim);letter-spacing:.15em}
+
+/* ===== Responsive ===== */
+@media(max-width:900px){
+  section{padding:calc(var(--nav-h) + 2rem) 1.5rem 3rem}
+  .cover-title{font-size:3rem}
+  .section-title{font-size:1.8rem}
+  .divider-title{font-size:2.2rem}
+  .philosophy-lines p{font-size:1.6rem}
+  .thanks-title{font-size:3rem}
+  .ghost-char{font-size:10rem}
+  .page-meta{padding:0 1.5rem}
+  .case-b-bar{padding:1rem 1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-brand" onclick="scrollToSection('cover')">空谷设计<small>KONGGU DESIGN</small></div>
+  <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#cover" data-section="cover">封面</a></li>
+    <li><a href="#toc" data-section="toc">目录</a></li>
+    <li><a href="#prologue" data-section="prologue">序言</a></li>
+    <li><a href="#profile" data-section="profile">概况</a></li>
+    <li><a href="#capability" data-section="capability">能力</a></li>
+    <li><a href="#hotel" data-section="hotel">酒店</a></li>
+    <li><a href="#wellness" data-section="wellness">康养</a></li>
+    <li><a href="#philosophy" data-section="philosophy">理念</a></li>
+    <li><a href="#contact" data-section="contact">联系</a></li>
+  </ul>
+</nav>
+
+<!-- Side Dot Navigation -->
+<div class="dot-nav" id="dotNav">
+  <a href="#cover" data-section="cover"><span class="tooltip">封面</span></a>
+  <a href="#toc" data-section="toc"><span class="tooltip">目录</span></a>
+  <a href="#prologue" data-section="prologue"><span class="tooltip">序言</span></a>
+  <a href="#profile" data-section="profile"><span class="tooltip">公司概况</span></a>
+  <a href="#capability" data-section="capability"><span class="tooltip">核心能力</span></a>
+  <a href="#qualification" data-section="qualification"><span class="tooltip">资质认证</span></a>
+  <a href="#hotel" data-section="hotel"><span class="tooltip">酒店案例</span></a>
+  <a href="#wellness" data-section="wellness"><span class="tooltip">康养案例</span></a>
+  <a href="#philosophy" data-section="philosophy"><span class="tooltip">品牌理念</span></a>
+  <a href="#contact" data-section="contact"><span class="tooltip">联系我们</span></a>
+  <a href="#thanks" data-section="thanks"><span class="tooltip">致谢</span></a>
+</div>
+
+<!-- Back to Top -->
+<button class="back-top" id="backTop" aria-label="回到顶部">↑</button>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">×</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- ===== P1 Cover ===== -->
+<section id="cover">
+  <div class="cover-inner">
+    <div class="cover-brand reveal">空谷设计</div>
+    <div class="cover-brand-en reveal reveal-delay-1">KONGGU DESIGN</div>
+    <h1 class="cover-title reveal reveal-delay-1">空谷设计</h1>
+    <div class="cover-title-en reveal reveal-delay-2">KONGGU DESIGN</div>
+    <div class="section-line reveal reveal-delay-2"></div>
+    <p class="cover-sub reveal reveal-delay-3">酒店 · 康养 · 休闲空间设计 &nbsp;·&nbsp; 2026 企业简介</p>
+    <p class="cover-meta reveal reveal-delay-3">CHENGDU · CHINA · EST. 2010s</p>
+  </div>
+  <div class="cover-corner">HOTEL &amp; WELLNESS SPACE</div>
+  <div class="cover-scroll">SCROLL</div>
+</section>
+
+<!-- ===== P2 TOC ===== -->
+<section id="toc">
+  <div class="ghost-char">目</div>
+  <div class="container">
+    <div class="section-tag reveal">CONTENTS</div>
+    <h2 class="section-title reveal">目录</h2>
+    <div class="section-line reveal"></div>
+    <div class="toc-grid">
+      <a class="toc-card reveal" href="#prologue"><div class="num">01</div><h3>品牌序言</h3><div class="en">PROLOGUE</div><p class="desc">居于空谷，心在云际</p></a>
+      <a class="toc-card reveal reveal-delay-1" href="#profile"><div class="num">02</div><h3>公司概况</h3><div class="en">PROFILE</div><p class="desc">双品牌 · 双业务线</p></a>
+      <a class="toc-card reveal reveal-delay-2" href="#capability"><div class="num">03</div><h3>核心能力</h3><div class="en">CAPABILITY</div><p class="desc">全链条设计服务</p></a>
+      <a class="toc-card reveal" href="#hotel"><div class="num">04</div><h3>酒店代表案例</h3><div class="en">HOTEL PORTFOLIO</div><p class="desc">七大代表性酒店项目</p></a>
+      <a class="toc-card reveal reveal-delay-1" href="#wellness"><div class="num">05</div><h3>康养休闲案例</h3><div class="en">WELLNESS &amp; LEISURE</div><p class="desc">足浴健康与休闲空间</p></a>
+      <a class="toc-card reveal reveal-delay-2" href="#philosophy"><div class="num">06</div><h3>品牌理念</h3><div class="en">PHILOSOPHY</div><p class="desc">专业 · 敬畏 · 温度</p></a>
+      <a class="toc-card reveal reveal-delay-1" href="#contact" style="grid-column:1/-1;max-width:400px;justify-self:center;text-align:center"><div class="num">07</div><h3>联系我们</h3><div class="en">CONTACT</div><p class="desc">期待与您同行</p></a>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>02 / 21</span></div>
+</section>
+
+<!-- ===== P3 Prologue ===== -->
+<section id="prologue">
+  <div class="ghost-char">序</div>
+  <div class="section-tag reveal">01 · 品牌序言 · PROLOGUE</div>
+  <p class="prologue-quote reveal">居于空谷 · 心在云际</p>
+  <div class="section-line reveal" style="margin:0 auto 1.5rem"></div>
+  <p class="prologue-sub reveal">以东方意境，筑当代空间；让每一处抵达，都成为归心之旅。</p>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>03 / 21</span></div>
+</section>
+
+<!-- ===== P4 Profile ===== -->
+<section id="profile">
+  <div class="container">
+    <div class="section-tag reveal">02 · 公司概况 · PROFILE</div>
+    <h2 class="section-title reveal">关于我们</h2>
+    <div class="section-line reveal"></div>
+    <div class="profile-grid">
+      <div class="reveal">
+        <div class="profile-stats">
+          <div class="stat-card"><div class="stat-num">10+</div><div class="stat-label">年行业深耕</div></div>
+          <div class="stat-card"><div class="stat-num">200+</div><div class="stat-label">酒店项目落地</div></div>
+          <div class="stat-card"><div class="stat-num">200+</div><div class="stat-label">康养休闲项目</div></div>
+        </div>
+      </div>
+      <div class="profile-body reveal reveal-delay-1">
+        <p>空谷设计创立于成都，深耕酒店与康养休闲空间设计十余年，是一家集前期策划、空间设计、软装陈设与落地运营支持于一体的专业设计公司。</p>
+        <p>公司以"空谷云际"专注酒店及商业空间，以"空谷设计"深耕足浴健康与休闲空间，双线并进、互为印证。以"商业价值导向"为设计原点，提供选址分析、商业规划、品牌定位、室内设计、软装搭配、VI 导视、成本控制、施工支持、家具软装、运营支持的全链条服务。</p>
+        <p>截至 2026 年，已累计落地 400+ 酒店、康养与休闲空间项目，覆盖国际会议中心、中高端酒店、足浴水汇等多元业态，是我们为客户持续创造价值的基础。</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>04 / 21</span></div>
+</section>
+
+<!-- ===== P5 Capability ===== -->
+<section id="capability">
+  <div class="container">
+    <div class="section-tag reveal">03 · 核心能力 · CAPABILITY</div>
+    <h2 class="section-title reveal">全链条设计服务</h2>
+    <p class="reveal" style="color:var(--gray-dim);font-size:.9rem;margin-bottom:1rem">从选址分析到运营支持，一站式覆盖酒店、康养与休闲空间全生命周期</p>
+    <div class="section-line reveal"></div>
+    <div class="cap-grid">
+      <div class="cap-card reveal"><div class="num">01</div><div class="name">选址分析</div></div>
+      <div class="cap-card reveal reveal-delay-1"><div class="num">02</div><div class="name">商业规划</div></div>
+      <div class="cap-card reveal reveal-delay-2"><div class="num">03</div><div class="name">品牌定位</div></div>
+      <div class="cap-card reveal"><div class="num">04</div><div class="name">室内设计</div></div>
+      <div class="cap-card reveal reveal-delay-1"><div class="num">05</div><div class="name">软装搭配</div></div>
+      <div class="cap-card reveal"><div class="num">06</div><div class="name">VI 导视</div></div>
+      <div class="cap-card reveal reveal-delay-1"><div class="num">07</div><div class="name">成本控制</div></div>
+      <div class="cap-card reveal reveal-delay-2"><div class="num">08</div><div class="name">施工支持</div></div>
+      <div class="cap-card reveal"><div class="num">09</div><div class="name">家具软装</div></div>
+      <div class="cap-card reveal reveal-delay-1"><div class="num">10</div><div class="name">运营支持</div></div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>05 / 21</span></div>
+</section>
+
+<!-- ===== P6 Qualification ===== -->
+<section id="qualification">
+  <div class="container">
+    <div class="section-tag reveal">02 · 公司概况 · 资质认证 · QUALIFICATION</div>
+    <h2 class="section-title reveal">资质认证</h2>
+    <div class="section-line reveal"></div>
+    <div class="cert-grid">
+      <div class="cert-card reveal"><img class="case-img" src="assets/img/cert-01.jpg" alt="工程设计资质证书" data-caption="工程设计资质证书"><p>工程设计资质证书</p></div>
+      <div class="cert-card reveal reveal-delay-1"><img class="case-img" src="assets/img/cert-02.jpg" alt="营业执照" data-caption="营业执照"><p>营业执照</p></div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>06 / 21</span></div>
+</section>
+
+<!-- ===== P7 Hotel Divider ===== -->
+<section id="hotel" class="divider">
+  <div class="ghost-char">店</div>
+  <div class="container">
+    <div class="section-tag reveal">04 · 酒店代表案例 · HOTEL PORTFOLIO</div>
+    <h2 class="divider-title reveal">酒店代表案例</h2>
+    <div class="divider-en reveal">SELECTED WORKS · 2021 — 2026</div>
+    <div class="section-line reveal"></div>
+    <p class="divider-desc reveal">7 个代表性酒店与商业空间项目，覆盖会议中心、中高端酒店、度假酒店等多元业态</p>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>07 / 21</span></div>
+</section>
+
+<!-- ===== P8 云帆 A ===== -->
+<section id="case-yunfan">
+  <div class="container">
+    <div class="section-tag reveal">04 · 酒店代表案例</div>
+    <div class="case-header reveal">
+      <span class="case-no">01</span>
+      <h2 class="case-title">绵阳云帆国际会议中心</h2>
+      <span class="case-en">Mianyang Yunfan International Conference Center</span>
+    </div>
+    <div class="case-a">
+      <img class="case-img reveal" src="assets/img/hotel-yunfan-1.jpg" alt="绵阳云帆国际会议中心" data-caption="绵阳云帆国际会议中心">
+      <div class="reveal reveal-delay-1">
+        <dl class="case-meta">
+          <dt>时间</dt><dd>2021</dd>
+          <dt>地点</dt><dd>绵阳江油</dd>
+          <dt>面积</dt><dd>40000㎡</dd>
+          <dt>服务内容</dt><dd>空间设计</dd>
+        </dl>
+        <img class="case-sub" src="assets/img/hotel-yunfan-2.jpg" alt="云帆细节" data-caption="绵阳云帆国际会议中心 · 细节">
+      </div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>08 / 21</span></div>
+</section>
+
+<!-- ===== P9 科创 B ===== -->
+<section id="case-subo">
+  <div class="container">
+    <div class="section-tag reveal">04 · 酒店代表案例</div>
+    <div class="case-header reveal">
+      <span class="case-no">02</span>
+      <h2 class="case-title">成都科创宿泊码头酒店</h2>
+      <span class="case-en">Chengdu Kechuang Subo Wharf Hotel</span>
+    </div>
+    <div class="case-b-wrap reveal">
+      <img class="case-img" src="assets/img/hotel-subo-1.jpg" alt="成都科创宿泊码头酒店" data-caption="成都科创宿泊码头酒店">
+      <img class="case-b-sub" src="assets/img/hotel-subo-2.jpg" alt="科创细节" data-caption="成都科创宿泊码头酒店 · 细节">
+      <div class="case-b-bar">
+        <div><h2>成都科创宿泊码头酒店</h2><div class="en">Chengdu Kechuang Subo Wharf Hotel</div></div>
+        <dl class="case-b-meta">
+          <div><dt>时间</dt><dd>2021</dd></div>
+          <div><dt>地点</dt><dd>四川成都</dd></div>
+          <div><dt>面积</dt><dd>10000㎡</dd></div>
+          <div><dt>服务</dt><dd>空间设计</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>09 / 21</span></div>
+</section>
+
+<!-- ===== P10 岳池 C ===== -->
+<section id="case-yuechi">
+  <div class="container">
+    <div class="section-tag reveal">04 · 酒店代表案例</div>
+    <div class="case-c-wrap reveal">
+      <span class="case-no">03</span>
+      <img class="case-img" src="assets/img/hotel-yuechi-1.jpg" alt="四川岳池钻石酒店" data-caption="四川岳池钻石酒店">
+      <div class="case-c-info"><h2>四川岳池钻石酒店</h2><div class="en">Sichuan Yuechi Diamond Hotel</div></div>
+      <img class="case-c-sub" src="assets/img/hotel-yuechi-2.jpg" alt="岳池细节" data-caption="四川岳池钻石酒店 · 细节">
+    </div>
+    <dl class="case-meta reveal" style="margin-top:1.2rem;max-width:500px">
+      <dt>时间</dt><dd>2022</dd><dt>地点</dt><dd>四川岳池</dd><dt>面积</dt><dd>10000㎡</dd><dt>服务内容</dt><dd>空间设计</dd>
+    </dl>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>10 / 21</span></div>
+</section>
+
+<!-- ===== P11 盛铂 A ===== -->
+<section id="case-shengbo">
+  <div class="container">
+    <div class="section-tag reveal">04 · 酒店代表案例</div>
+    <div class="case-header reveal">
+      <span class="case-no">04</span>
+      <h2 class="case-title">西安盛铂清居酒店</h2>
+      <span class="case-en">Xi'an Shengbo Qingju Hotel</span>
+    </div>
+    <div class="case-a">
+      <img class="case-img reveal" src="assets/img/hotel-shengbo-1.jpg" alt="西安盛铂清居酒店" data-caption="西安盛铂清居酒店">
+      <div class="reveal reveal-delay-1">
+        <dl class="case-meta">
+          <dt>时间</dt><dd>2023</dd><dt>地点</dt><dd>陕西西安</dd><dt>面积</dt><dd>7000㎡</dd><dt>服务内容</dt><dd>空间设计</dd>
+        </dl>
+        <img class="case-sub" src="assets/img/hotel-shengbo-2.jpg" alt="盛铂细节" data-caption="西安盛铂清居酒店 · 细节">
+      </div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>11 / 21</span></div>
+</section>
+
+<!-- ===== P12 豪生 B ===== -->
+<section id="case-haosheng">
+  <div class="container">
+    <div class="section-tag reveal">04 · 酒店代表案例</div>
+    <div class="case-header reveal">
+      <span class="case-no">05</span>
+      <h2 class="case-title">成都新都豪生Life酒店</h2>
+      <span class="case-en">Howard Johnson Life Hotel Chengdu</span>
+    </div>
+    <div class="case-b-wrap reveal">
+      <img class="case-img" src="assets/img/hotel-haosheng-1.jpg" alt="成都新都豪生Life酒店" data-caption="成都新都豪生Life酒店">
+      <img class="case-b-sub" src="assets/img/hotel-haosheng-2.jpg" alt="豪生细节" data-caption="成都新都豪生Life酒店 · 细节">
+      <div class="case-b-bar">
+        <div><h2>成都新都豪生Life酒店</h2><div class="en">Howard Johnson Life Hotel Chengdu</div></div>
+        <dl class="case-b-meta">
+          <div><dt>时间</dt><dd>2023</dd></div><div><dt>地点</dt><dd>四川成都</dd></div><div><dt>面积</dt><dd>12000㎡</dd></div><div><dt>服务</dt><dd>空间设计</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>12 / 21</span></div>
+</section>
+
+<!-- ===== P13 凯莱希 C ===== -->
+<section id="case-kalais">
+  <div class="container">
+    <div class="section-tag reveal">04 · 酒店代表案例</div>
+    <div class="case-c-wrap reveal">
+      <span class="case-no">06</span>
+      <img class="case-img" src="assets/img/hotel-kalais-1.jpg" alt="凯莱希假日酒店" data-caption="凯莱希假日酒店">
+      <div class="case-c-info"><h2>凯莱希假日酒店</h2><div class="en">KALAS Holiday Hotel</div></div>
+      <img class="case-c-sub" src="assets/img/hotel-kalais-2.jpg" alt="凯莱希细节" data-caption="凯莱希假日酒店 · 细节">
+    </div>
+    <dl class="case-meta reveal" style="margin-top:1.2rem;max-width:500px">
+      <dt>时间</dt><dd>2022</dd><dt>地点</dt><dd>四川成都</dd><dt>面积</dt><dd>4000㎡</dd><dt>服务内容</dt><dd>空间设计</dd>
+    </dl>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>13 / 21</span></div>
+</section>
+
+<!-- ===== P14 廷泊 A ===== -->
+<section id="case-tingbo">
+  <div class="container">
+    <div class="section-tag reveal">04 · 酒店代表案例</div>
+    <div class="case-header reveal">
+      <span class="case-no">07</span>
+      <h2 class="case-title">廷泊酒店</h2>
+      <span class="case-en">TILL BRIGHT Hotel</span>
+    </div>
+    <div class="case-a">
+      <img class="case-img reveal" src="assets/img/hotel-tingbo-1.jpg" alt="廷泊酒店" data-caption="廷泊酒店">
+      <div class="reveal reveal-delay-1">
+        <dl class="case-meta">
+          <dt>时间</dt><dd>2026</dd><dt>地点</dt><dd>四川康定</dd><dt>面积</dt><dd>6000㎡</dd><dt>服务内容</dt><dd>空间设计</dd>
+        </dl>
+        <img class="case-sub" src="assets/img/hotel-tingbo-2.jpg" alt="廷泊细节" data-caption="廷泊酒店 · 细节">
+      </div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>14 / 21</span></div>
+</section>
+
+<!-- ===== P15 Wellness Divider ===== -->
+<section id="wellness" class="divider">
+  <div class="ghost-char">养</div>
+  <div class="container">
+    <div class="section-tag reveal">05 · 康养休闲案例 · WELLNESS &amp; LEISURE</div>
+    <h2 class="divider-title reveal">康养休闲案例</h2>
+    <div class="divider-en reveal">WELLNESS &amp; LEISURE SELECTED WORKS</div>
+    <div class="section-line reveal"></div>
+    <p class="divider-desc reveal">十余年深耕足浴健康与休闲空间设计，累计落地 200+ 项目，精选代表作品</p>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>15 / 21</span></div>
+</section>
+
+<!-- ===== P16 克拉拉 + 朋乐迹 ===== -->
+<section id="wellness-1">
+  <div class="container">
+    <div class="section-tag reveal">05 · 康养休闲案例</div>
+    <h2 class="section-title reveal" style="font-size:1.8rem">精选康养项目</h2>
+    <div class="section-line reveal"></div>
+    <div class="wellness-duo">
+      <div class="wellness-card reveal" style="height:480px">
+        <img class="case-img" src="assets/img/wellness-kelala.jpg" alt="克拉拉" data-caption="克拉拉 · 足道养生">
+        <div class="label">克拉拉</div>
+      </div>
+      <div class="wellness-card reveal reveal-delay-1" style="height:480px">
+        <img class="case-img" src="assets/img/wellness-pengleji.jpg" alt="朋乐迹" data-caption="朋乐迹 · K歌沐足">
+        <div class="label">朋乐迹</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>16 / 21</span></div>
+</section>
+
+<!-- ===== P17 莲足纪 + 臻享足道 ===== -->
+<section id="wellness-2">
+  <div class="container">
+    <div class="section-tag reveal">05 · 康养休闲案例</div>
+    <h2 class="section-title reveal" style="font-size:1.8rem">足道养生系列</h2>
+    <div class="section-line reveal"></div>
+    <div class="wellness-pair">
+      <div class="wellness-card reveal" style="height:340px">
+        <img class="case-img" src="assets/img/wellness-lianzuji.jpg" alt="莲足纪" data-caption="莲足纪 · 中式足道">
+        <div class="label">莲足纪<span class="en">中式足道 · LIANZUJI</span></div>
+      </div>
+      <div class="wellness-card reveal reveal-delay-1" style="height:340px">
+        <img class="case-img" src="assets/img/wellness-zhenxiang.jpg" alt="臻享足道" data-caption="臻享足道 · 健康足道">
+        <div class="label">臻享足道<span class="en">健康足道 · ZHENXIANG</span></div>
+      </div>
+    </div>
+    <p class="wellness-more reveal">更多项目：春天印象 · 沐芳华 · 云足道 · 观澜境会馆 · 涪江月 · 寻境K歌沐足 · 飞花令</p>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>17 / 21</span></div>
+</section>
+
+<!-- ===== P18 四格 ===== -->
+<section id="wellness-3">
+  <div class="container">
+    <div class="section-tag reveal">05 · 康养休闲案例</div>
+    <h2 class="section-title reveal" style="font-size:1.8rem">多元休闲业态</h2>
+    <div class="section-line reveal"></div>
+    <div class="wellness-quad">
+      <div class="wellness-card reveal"><img class="case-img" src="assets/img/wellness-pengyue.jpg" alt="朋悦·泰" data-caption="朋悦·泰 · 养生SPA"><div class="q-label"><h4>朋悦·泰</h4><p>养生SPA · PENGYUE</p></div></div>
+      <div class="wellness-card reveal reveal-delay-1"><img class="case-img" src="assets/img/wellness-nanjinhui.jpg" alt="楠锦荟" data-caption="楠锦荟 · 水汇休闲"><div class="q-label"><h4>楠锦荟</h4><p>水汇休闲 · NANJINHUI</p></div></div>
+      <div class="wellness-card reveal"><img class="case-img" src="assets/img/wellness-meizu.jpg" alt="美足时光" data-caption="美足时光 · 休闲足道"><div class="q-label"><h4>美足时光</h4><p>休闲足道 · MEIZU</p></div></div>
+      <div class="wellness-card reveal reveal-delay-1"><img class="case-img" src="assets/img/wellness-qiyin.jpg" alt="栖隐" data-caption="栖隐 · 禅意养生"><div class="q-label"><h4>栖隐</h4><p>禅意养生 · QIYIN</p></div></div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>18 / 21</span></div>
+</section>
+
+<!-- ===== P19 Philosophy ===== -->
+<section id="philosophy">
+  <div class="ghost-char">心</div>
+  <div class="section-tag reveal">06 · 品牌理念 · PHILOSOPHY</div>
+  <div class="philosophy-lines">
+    <p class="reveal">执专业之尺</p>
+    <p class="reveal reveal-delay-1">怀敬畏之心</p>
+    <p class="reveal reveal-delay-2 gold">筑有温度的空间</p>
+  </div>
+  <div class="section-line reveal" style="margin:1.5rem auto"></div>
+  <p class="philosophy-desc reveal">以专业为尺、以敬畏为心、以温度为魂——让空间不止于设计，更成为值得回味的场域。</p>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>19 / 21</span></div>
+</section>
+
+<!-- ===== P20 Contact ===== -->
+<section id="contact">
+  <div class="container">
+    <div class="section-tag reveal">07 · 联系我们 · CONTACT</div>
+    <h2 class="section-title reveal">联系我们</h2>
+    <div class="section-line reveal"></div>
+    <div class="contact-grid">
+      <div class="contact-map reveal">
+        <img src="assets/img/map-chengdu.jpg" alt="成都区位图">
+        <p>成都 · 利星行广场（区位示意）</p>
+      </div>
+      <div class="contact-info reveal reveal-delay-1">
+        <div class="info-block">
+          <div class="info-label">TEL</div>
+          <div class="info-value">136 7808 0880</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">ADDRESS</div>
+          <div class="info-value addr">四川成都 · 利星行广场</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">WECHAT</div>
+          <div class="contact-qr">
+            <img src="assets/img/qrcode.png" alt="微信二维码">
+            <p>扫码咨询 · 期待与您同行</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-meta"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span><span>20 / 21</span></div>
+</section>
+
+<!-- ===== P21 Thanks ===== -->
+<section id="thanks">
+  <h2 class="thanks-title reveal">谢谢</h2>
+  <div class="thanks-en reveal reveal-delay-1">THANK YOU</div>
+  <div class="section-line reveal" style="margin:0 auto 1.5rem"></div>
+  <p class="thanks-sub reveal reveal-delay-2">感谢关注，期待与您同行</p>
+  <div class="thanks-brand reveal">空谷设计</div>
+  <div class="thanks-brand-en reveal reveal-delay-1">KONGGU DESIGN</div>
+  <div class="page-meta" style="justify-content:center"><span>KONGGU DESIGN · HOTEL &amp; WELLNESS SPACE</span></div>
+</section>
+
+<script>
+// ===== Scroll Progress + Nav State + Back to Top =====
+const progressBar=document.getElementById('progressBar');
+const nav=document.getElementById('nav');
+const backTop=document.getElementById('backTop');
+const navLinks=document.querySelectorAll('.nav-links a');
+const dotLinks=document.querySelectorAll('.dot-nav a');
+const sections=document.querySelectorAll('section[id]');
+
+function onScroll(){
+  const st=window.scrollY;
+  const dh=document.documentElement.scrollHeight-window.innerHeight;
+  progressBar.style.width=(dh>0?(st/dh*100):0)+'%';
+  nav.classList.toggle('scrolled',st>50);
+  backTop.classList.toggle('show',st>600);
+  // active section
+  let current='';
+  sections.forEach(s=>{if(st>=s.offsetTop-200)current=s.id});
+  navLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===current));
+  dotLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===current));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+
+// ===== Back to Top =====
+backTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// ===== Mobile Nav Toggle =====
+const navToggle=document.getElementById('navToggle');
+const navLinksEl=document.getElementById('navLinks');
+navToggle.addEventListener('click',()=>navLinksEl.classList.toggle('open'));
+navLinksEl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinksEl.classList.remove('open')));
+
+// ===== Scroll to Section (brand click) =====
+function scrollToSection(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'})}
+
+// ===== Reveal on Scroll =====
+const revealEls=document.querySelectorAll('.reveal');
+const revealObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}});
+},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el=>revealObserver.observe(el));
+
+// ===== Lightbox =====
+const lightbox=document.getElementById('lightbox');
+const lightboxImg=document.getElementById('lightboxImg');
+const lightboxCaption=document.getElementById('lightboxCaption');
+const lightboxClose=document.getElementById('lightboxClose');
+
+document.querySelectorAll('.case-img,.case-sub,.case-b-sub,.case-c-sub').forEach(img=>{
+  img.addEventListener('click',()=>{
+    lightboxImg.src=img.src;
+    lightboxCaption.textContent=img.dataset.caption||img.alt||'';
+    lightbox.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
+function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';lightboxImg.src=''}
+lightboxClose.addEventListener('click',closeLightbox);
+lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+
+// ===== Keyboard Navigation (Arrow keys) =====
+const sectionIds=Array.from(sections).map(s=>s.id);
+let currentIdx=0;
+document.addEventListener('keydown',e=>{
+  if(lightbox.classList.contains('open'))return;
+  if(e.key==='ArrowDown'||e.key==='PageDown'){
+    e.preventDefault();
+    currentIdx=Math.min(sectionIds.length-1,currentIdx+1);
+    document.getElementById(sectionIds[currentIdx])?.scrollIntoView({behavior:'smooth'});
+  }else if(e.key==='ArrowUp'||e.key==='PageUp'){
+    e.preventDefault();
+    currentIdx=Math.max(0,currentIdx-1);
+    document.getElementById(sectionIds[currentIdx])?.scrollIntoView({behavior:'smooth'});
+  }else if(e.key==='Home'){
+    e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});
+  }else if(e.key==='End'){
+    e.preventDefault();window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+  }
+});
+// sync currentIdx on scroll
+window.addEventListener('scroll',()=>{
+  const st=window.scrollY;
+  sections.forEach((s,i)=>{if(st>=s.offsetTop-300)currentIdx=i});
+},{passive:true});
+</script>
+</body>
+</html>
